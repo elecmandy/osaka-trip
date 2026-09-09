@@ -25,271 +25,378 @@
     margin:0;
     font-family:'Noto Sans TC', sans-serif;
     color:var(--slate);
-    background:linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 420px);
     font-size:17px;
-    line-height:1.7;
+    line-height:1.75;
   }
 
-  .page{
-    max-width:800px;
-    margin:0 auto;
-  }
-
-  /* ---------- Hero ---------- */
-  .hero{
-    background:linear-gradient(135deg, var(--ocean-deep), var(--ocean));
-    color:#ffffff;
-    text-align:center;
-    padding:4.5rem 1.5rem 5.5rem;
-    position:relative;
-  }
-
-  .hero h1{
-    font-family:'Noto Serif TC', serif;
-    font-weight:700;
-    font-size:clamp(2.2rem, 5vw, 3.1rem);
-    margin:0 0 0.8rem;
-    letter-spacing:0.02em;
-  }
-
-  .hero p{
-    font-size:1.15rem;
-    margin:0;
-    color:#dff3fb;
-    font-weight:400;
-  }
-
-  .hero-wave{
-    display:block;
-    width:100%;
-    height:70px;
-    margin-bottom:-1px;
-  }
-
-  /* ---------- Timeline / Cards ---------- */
-  main.timeline{
-    position:relative;
-    padding:1rem 1.5rem 3rem;
-  }
-
-  main.timeline::before{
-    content:"";
-    position:absolute;
-    top:0.5rem;
-    bottom:2rem;
-    left:calc(1.5rem + 34px);
-    border-left:2px dashed var(--sky-line);
-  }
-
-  .day-card{
-    position:relative;
+  .app{
     display:flex;
-    gap:1.5rem;
-    align-items:flex-start;
-    background:var(--card-bg);
-    border:1px solid var(--sky-line);
-    border-radius:14px;
-    box-shadow:0 10px 24px rgba(46,134,171,0.10);
-    padding:1.8rem 1.8rem;
-    margin-bottom:2.2rem;
-    transition:transform 0.2s ease, box-shadow 0.2s ease;
+    min-height:100vh;
   }
 
-  .day-card:hover{
-    transform:translateY(-3px);
-    box-shadow:0 16px 30px rgba(46,134,171,0.16);
-  }
-
-  .day-marker{
-    flex:0 0 auto;
-    width:68px;
-    height:68px;
-    border-radius:50%;
-    background:#ffffff;
-    border:2px solid var(--ocean);
+  /* ---------- Sidebar ---------- */
+  .sidebar{
+    flex:0 0 260px;
+    width:260px;
+    background:linear-gradient(180deg, var(--ocean-deep), var(--ocean));
+    color:#ffffff;
+    padding:2.4rem 1.6rem;
     display:flex;
     flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    z-index:1;
+    gap:2.2rem;
   }
 
-  .day-marker .day-num{
+  .sidebar-title{
     font-family:'Noto Serif TC', serif;
     font-weight:700;
-    font-size:1.5rem;
-    color:var(--navy);
-    line-height:1;
+    font-size:1.35rem;
+    margin:0 0 0.4rem;
+    line-height:1.4;
   }
 
-  .day-marker .day-label{
-    font-size:0.65rem;
-    color:var(--ocean);
-    letter-spacing:0.08em;
+  .sidebar-sub{
+    font-size:0.85rem;
+    color:#dff3fb;
+    margin:0;
+  }
+
+  .nav-list{
+    position:relative;
+    list-style:none;
+    margin:0;
+    padding-left:1.3rem;
+    display:flex;
+    flex-direction:column;
+    gap:0.7rem;
+  }
+
+  .nav-list::before{
+    content:"";
+    position:absolute;
+    left:0.35rem;
+    top:0.6rem;
+    bottom:0.6rem;
+    border-left:2px dashed rgba(255,255,255,0.35);
+  }
+
+  .nav-btn{
+    position:relative;
+    width:100%;
+    text-align:left;
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.35);
+    border-radius:10px;
+    color:#ffffff;
+    padding:0.7rem 1rem;
+    cursor:pointer;
+    font-family:'Noto Sans TC', sans-serif;
+    transition:background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .nav-btn::before{
+    content:"";
+    position:absolute;
+    left:-0.95rem;
+    top:50%;
+    transform:translateY(-50%);
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:#ffffff;
+    border:2px solid rgba(255,255,255,0.55);
+    transition:background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .nav-btn .nav-day{
+    font-family:'Noto Serif TC', serif;
+    font-weight:700;
+    font-size:1.05rem;
+    display:block;
+  }
+
+  .nav-btn .nav-date{
+    font-size:0.8rem;
+    color:#dff3fb;
+    display:block;
     margin-top:2px;
   }
 
-  .day-content{
+  .nav-btn:hover{
+    background:rgba(255,255,255,0.14);
+  }
+
+  .nav-btn.is-active{
+    background:#ffffff;
+    border-color:#ffffff;
+  }
+
+  .nav-btn.is-active .nav-day{
+    color:var(--navy);
+  }
+
+  .nav-btn.is-active .nav-date{
+    color:var(--ocean-deep);
+  }
+
+  .nav-btn.is-active::before{
+    background:var(--ocean-deep);
+    border-color:#ffffff;
+  }
+
+  .nav-btn:focus-visible{
+    outline:3px solid #ffffff;
+    outline-offset:2px;
+  }
+
+  /* ---------- Main content ---------- */
+  .main{
     flex:1 1 auto;
-    min-width:0;
+    background:linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 480px);
+    padding:3.5rem 3rem;
+    overflow-x:hidden;
   }
 
-  .day-meta{
-    display:flex;
-    flex-wrap:wrap;
-    align-items:baseline;
-    justify-content:space-between;
-    gap:0.5rem;
-    margin-bottom:0.6rem;
+  .panel-inner{
+    max-width:600px;
   }
 
-  .day-title{
+  .day-panel{
+    display:none;
+    opacity:0;
+    transform:translateY(10px);
+    transition:opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .day-panel.active{
+    display:block;
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  .day-panel.fade-out{
+    opacity:0;
+    transform:translateY(-10px);
+  }
+
+  .panel-daynum{
     font-family:'Noto Serif TC', serif;
     font-weight:700;
-    font-size:1.5rem;
-    color:var(--navy);
-    margin:0;
+    font-size:3rem;
+    color:var(--sky-line);
+    line-height:1;
+    margin:0 0 0.4rem;
   }
 
-  .day-date{
-    font-size:0.95rem;
+  .panel-title{
+    font-family:'Noto Serif TC', serif;
+    font-weight:700;
+    font-size:2rem;
+    color:var(--navy);
+    margin:0 0 0.3rem;
+  }
+
+  .panel-date{
+    font-size:1rem;
     color:var(--ocean-deep);
     font-weight:500;
-    white-space:nowrap;
+    margin:0 0 1.4rem;
   }
 
-  .day-intro{
+  .panel-intro{
+    font-size:1.08rem;
+    margin:0 0 1.8rem;
+  }
+
+  .panel-highlights{
+    list-style:none;
     margin:0;
-    font-size:1.05rem;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:0.7rem;
+  }
+
+  .panel-highlights li{
+    background:var(--card-bg);
+    border:1px solid var(--sky-line);
+    border-radius:10px;
+    padding:0.85rem 1.1rem;
+    font-size:1rem;
     color:var(--slate);
   }
 
-  /* ---------- Footer ---------- */
-  .page-footer{
-    text-align:center;
-    padding:2rem 1.5rem 3.5rem;
-    color:var(--ocean-deep);
-    font-size:0.95rem;
-  }
-
-  .page-footer::before{
-    content:"";
-    display:block;
-    width:60px;
-    height:2px;
-    background:var(--sky-line);
-    margin:0 auto 1.2rem;
+  @media (prefers-reduced-motion: reduce){
+    .day-panel{ transition:none; }
   }
 
   /* ---------- Responsive ---------- */
-  @media (max-width:560px){
-    .hero{ padding:3.5rem 1.2rem 4.5rem; }
-    main.timeline{ padding:1rem 1rem 2.5rem; }
-    main.timeline::before{ left:calc(1rem + 30px); }
-    .day-card{
-      flex-direction:column;
+  @media (max-width:760px){
+    .app{ flex-direction:column; }
+    .sidebar{
+      flex:0 0 auto;
+      width:100%;
+      flex-direction:row;
       align-items:center;
-      text-align:center;
-      padding:1.6rem 1.2rem;
+      gap:1.2rem;
+      padding:1.2rem 1.2rem;
+      overflow-x:auto;
     }
-    .day-meta{
-      flex-direction:column;
-      align-items:center;
+    .sidebar-title, .sidebar-sub{ display:none; }
+    .nav-list{
+      flex-direction:row;
+      padding-left:0;
+      gap:0.6rem;
     }
+    .nav-list::before{ display:none; }
+    .nav-btn::before{ display:none; }
+    .nav-btn{ flex:0 0 auto; white-space:nowrap; }
+    .main{ padding:2.2rem 1.4rem; }
   }
 </style>
 </head>
 <body>
 
-<div class="page">
+<div class="app">
 
-  <header class="hero">
-    <h1>大阪五日遊行程</h1>
-    <p>五天四夜，慢慢走過這座城市</p>
-    <svg class="hero-wave" viewBox="0 0 800 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,40 C150,80 350,0 500,30 C650,60 750,20 800,35 L800,70 L0,70 Z" fill="#eaf6fb"></path>
-    </svg>
-  </header>
+  <aside class="sidebar">
+    <div>
+      <p class="sidebar-title">大阪五日遊行程</p>
+      <p class="sidebar-sub">2026/10/7 − 10/11</p>
+    </div>
 
-  <main class="timeline">
+    <ul class="nav-list" role="tablist" aria-label="行程日期">
+      <li><button class="nav-btn is-active" id="tab-day-1" role="tab" aria-selected="true" aria-controls="panel-day-1" data-day="1">
+        <span class="nav-day">DAY 01</span><span class="nav-date">10/7（三）</span>
+      </button></li>
+      <li><button class="nav-btn" id="tab-day-2" role="tab" aria-selected="false" aria-controls="panel-day-2" data-day="2">
+        <span class="nav-day">DAY 02</span><span class="nav-date">10/8（四）</span>
+      </button></li>
+      <li><button class="nav-btn" id="tab-day-3" role="tab" aria-selected="false" aria-controls="panel-day-3" data-day="3">
+        <span class="nav-day">DAY 03</span><span class="nav-date">10/9（五）</span>
+      </button></li>
+      <li><button class="nav-btn" id="tab-day-4" role="tab" aria-selected="false" aria-controls="panel-day-4" data-day="4">
+        <span class="nav-day">DAY 04</span><span class="nav-date">10/10（六）</span>
+      </button></li>
+      <li><button class="nav-btn" id="tab-day-5" role="tab" aria-selected="false" aria-controls="panel-day-5" data-day="5">
+        <span class="nav-day">DAY 05</span><span class="nav-date">10/11（日）</span>
+      </button></li>
+    </ul>
+  </aside>
 
-    <section class="day-card">
-      <div class="day-marker">
-        <span class="day-num">01</span>
-        <span class="day-label">DAY</span>
-      </div>
-      <div class="day-content">
-        <div class="day-meta">
-          <h2 class="day-title">〈第一天主題標題〉</h2>
-          <span class="day-date">日期</span>
-        </div>
-        <p class="day-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
+  <main class="main">
+
+    <section class="day-panel active" id="panel-day-1" role="tabpanel" aria-labelledby="tab-day-1" data-day="1">
+      <div class="panel-inner">
+        <p class="panel-daynum">01</p>
+        <h2 class="panel-title">〈第一天主題標題〉</h2>
+        <p class="panel-date">10/7（三）</p>
+        <p class="panel-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
+        <ul class="panel-highlights">
+          <li>行程亮點 1（待填寫）</li>
+          <li>行程亮點 2（待填寫）</li>
+          <li>行程亮點 3（待填寫）</li>
+        </ul>
       </div>
     </section>
 
-    <section class="day-card">
-      <div class="day-marker">
-        <span class="day-num">02</span>
-        <span class="day-label">DAY</span>
-      </div>
-      <div class="day-content">
-        <div class="day-meta">
-          <h2 class="day-title">〈第二天主題標題〉</h2>
-          <span class="day-date">日期</span>
-        </div>
-        <p class="day-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
-      </div>
-    </section>
-
-    <section class="day-card">
-      <div class="day-marker">
-        <span class="day-num">03</span>
-        <span class="day-label">DAY</span>
-      </div>
-      <div class="day-content">
-        <div class="day-meta">
-          <h2 class="day-title">〈第三天主題標題〉</h2>
-          <span class="day-date">日期</span>
-        </div>
-        <p class="day-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
+    <section class="day-panel" id="panel-day-2" role="tabpanel" aria-labelledby="tab-day-2" data-day="2">
+      <div class="panel-inner">
+        <p class="panel-daynum">02</p>
+        <h2 class="panel-title">〈第二天主題標題〉</h2>
+        <p class="panel-date">10/8（四）</p>
+        <p class="panel-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
+        <ul class="panel-highlights">
+          <li>行程亮點 1（待填寫）</li>
+          <li>行程亮點 2（待填寫）</li>
+          <li>行程亮點 3（待填寫）</li>
+        </ul>
       </div>
     </section>
 
-    <section class="day-card">
-      <div class="day-marker">
-        <span class="day-num">04</span>
-        <span class="day-label">DAY</span>
-      </div>
-      <div class="day-content">
-        <div class="day-meta">
-          <h2 class="day-title">〈第四天主題標題〉</h2>
-          <span class="day-date">日期</span>
-        </div>
-        <p class="day-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
+    <section class="day-panel" id="panel-day-3" role="tabpanel" aria-labelledby="tab-day-3" data-day="3">
+      <div class="panel-inner">
+        <p class="panel-daynum">03</p>
+        <h2 class="panel-title">〈第三天主題標題〉</h2>
+        <p class="panel-date">10/9（五）</p>
+        <p class="panel-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
+        <ul class="panel-highlights">
+          <li>行程亮點 1（待填寫）</li>
+          <li>行程亮點 2（待填寫）</li>
+          <li>行程亮點 3（待填寫）</li>
+        </ul>
       </div>
     </section>
 
-    <section class="day-card">
-      <div class="day-marker">
-        <span class="day-num">05</span>
-        <span class="day-label">DAY</span>
+    <section class="day-panel" id="panel-day-4" role="tabpanel" aria-labelledby="tab-day-4" data-day="4">
+      <div class="panel-inner">
+        <p class="panel-daynum">04</p>
+        <h2 class="panel-title">〈第四天主題標題〉</h2>
+        <p class="panel-date">10/10（六）</p>
+        <p class="panel-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
+        <ul class="panel-highlights">
+          <li>行程亮點 1（待填寫）</li>
+          <li>行程亮點 2（待填寫）</li>
+          <li>行程亮點 3（待填寫）</li>
+        </ul>
       </div>
-      <div class="day-content">
-        <div class="day-meta">
-          <h2 class="day-title">〈第五天主題標題〉</h2>
-          <span class="day-date">日期</span>
-        </div>
-        <p class="day-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
+    </section>
+
+    <section class="day-panel" id="panel-day-5" role="tabpanel" aria-labelledby="tab-day-5" data-day="5">
+      <div class="panel-inner">
+        <p class="panel-daynum">05</p>
+        <h2 class="panel-title">〈第五天主題標題〉</h2>
+        <p class="panel-date">10/11（日）</p>
+        <p class="panel-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
+        <ul class="panel-highlights">
+          <li>行程亮點 1（待填寫）</li>
+          <li>行程亮點 2（待填寫）</li>
+          <li>行程亮點 3（待填寫）</li>
+        </ul>
       </div>
     </section>
 
   </main>
 
-  <footer class="page-footer">
-    <p>祝你有個美好的大阪旅程</p>
-  </footer>
-
 </div>
+
+<script>
+  var buttons = document.querySelectorAll('.nav-btn');
+  var FADE_MS = 300;
+
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if (btn.classList.contains('is-active')) return;
+      switchPanel(btn.dataset.day);
+      setActiveButton(btn);
+    });
+  });
+
+  function setActiveButton(activeBtn){
+    buttons.forEach(function(b){
+      var isActive = (b === activeBtn);
+      b.classList.toggle('is-active', isActive);
+      b.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+  }
+
+  function switchPanel(day){
+    var next = document.querySelector('.day-panel[data-day="' + day + '"]');
+    var current = document.querySelector('.day-panel.active');
+    if (!next || next === current) return;
+
+    current.classList.remove('active');
+    current.classList.add('fade-out');
+
+    window.setTimeout(function(){
+      current.classList.remove('fade-out');
+      current.style.display = 'none';
+
+      next.style.display = 'block';
+      void next.offsetWidth; /* 強制 reflow，確保淡入轉場觸發 */
+      next.classList.add('active');
+    }, FADE_MS);
+  }
+</script>
 
 </body>
 </html>
