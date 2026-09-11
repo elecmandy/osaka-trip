@@ -209,7 +209,41 @@
     font-size:1rem;
     color:var(--ocean-deep);
     font-weight:500;
+    margin:0;
+  }
+
+  .panel-date-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:0.6rem;
     margin:0 0 1.4rem;
+  }
+
+  .weather-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:0.4rem;
+    background:#eaf6fb;
+    border:1px solid var(--sky-line);
+    border-radius:999px;
+    padding:0.35rem 0.9rem;
+    font-size:0.95rem;
+    color:var(--ocean-deep);
+    font-weight:500;
+    white-space:nowrap;
+  }
+
+  .weather-badge .weather-icon{
+    font-size:1.15rem;
+    line-height:1;
+  }
+
+  .weather-badge.is-error{
+    color:#a15426;
+    background:#fdf1e8;
+    border-color:#f0d3b4;
   }
 
   .panel-intro{
@@ -371,7 +405,13 @@
       <div class="panel-inner">
         <p class="panel-daynum">01</p>
         <h2 class="panel-title">〈第一天主題標題〉</h2>
-        <p class="panel-date">10/7（三）</p>
+        <div class="panel-date-row">
+          <p class="panel-date">10/7（三）</p>
+          <div class="weather-badge is-loading" data-weather-date="2026-10-07">
+            <span class="weather-icon">⏳</span>
+            <span class="weather-label">載入中</span>
+          </div>
+        </div>
         <p class="panel-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
         <ul class="panel-highlights">
           <li>行程亮點 1（待填寫）</li>
@@ -385,7 +425,13 @@
       <div class="panel-inner">
         <p class="panel-daynum">02</p>
         <h2 class="panel-title">〈第二天主題標題〉</h2>
-        <p class="panel-date">10/8（四）</p>
+        <div class="panel-date-row">
+          <p class="panel-date">10/8（四）</p>
+          <div class="weather-badge is-loading" data-weather-date="2026-10-08">
+            <span class="weather-icon">⏳</span>
+            <span class="weather-label">載入中</span>
+          </div>
+        </div>
         <p class="panel-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
         <ul class="panel-highlights">
           <li>行程亮點 1（待填寫）</li>
@@ -399,7 +445,13 @@
       <div class="panel-inner">
         <p class="panel-daynum">03</p>
         <h2 class="panel-title">〈第三天主題標題〉</h2>
-        <p class="panel-date">10/9（五）</p>
+        <div class="panel-date-row">
+          <p class="panel-date">10/9（五）</p>
+          <div class="weather-badge is-loading" data-weather-date="2026-10-09">
+            <span class="weather-icon">⏳</span>
+            <span class="weather-label">載入中</span>
+          </div>
+        </div>
         <p class="panel-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
         <ul class="panel-highlights">
           <li>行程亮點 1（待填寫）</li>
@@ -413,7 +465,13 @@
       <div class="panel-inner">
         <p class="panel-daynum">04</p>
         <h2 class="panel-title">〈第四天主題標題〉</h2>
-        <p class="panel-date">10/10（六）</p>
+        <div class="panel-date-row">
+          <p class="panel-date">10/10（六）</p>
+          <div class="weather-badge is-loading" data-weather-date="2026-10-10">
+            <span class="weather-icon">⏳</span>
+            <span class="weather-label">載入中</span>
+          </div>
+        </div>
         <p class="panel-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
         <ul class="panel-highlights">
           <li>行程亮點 1（待填寫）</li>
@@ -427,7 +485,13 @@
       <div class="panel-inner">
         <p class="panel-daynum">05</p>
         <h2 class="panel-title">〈第五天主題標題〉</h2>
-        <p class="panel-date">10/11（日）</p>
+        <div class="panel-date-row">
+          <p class="panel-date">10/11（日）</p>
+          <div class="weather-badge is-loading" data-weather-date="2026-10-11">
+            <span class="weather-icon">⏳</span>
+            <span class="weather-label">載入中</span>
+          </div>
+        </div>
         <p class="panel-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
         <ul class="panel-highlights">
           <li>行程亮點 1（待填寫）</li>
@@ -528,6 +592,108 @@
       next.classList.add('active');
     }, FADE_MS);
   }
+
+  /* ---------- 大阪即時天氣（Open-Meteo，免金鑰） ---------- */
+
+  var OSAKA_LAT = 34.6937;
+  var OSAKA_LON = 135.5023;
+  var WEATHER_REFRESH_MS = 30 * 60 * 1000; // 每 30 分鐘自動重新抓取一次
+
+  // 每一天對應的西元日期，用來跟 API 回傳的預報日期比對
+  var TARGET_DATES = {
+    '1': '2026-10-07',
+    '2': '2026-10-08',
+    '3': '2026-10-09',
+    '4': '2026-10-10',
+    '5': '2026-10-11'
+  };
+
+  // Open-Meteo 使用 WMO 天氣代碼，這裡對應成 emoji 與中文說明
+  var WEATHER_CODE_MAP = {
+    0: ['☀️', '晴天'],
+    1: ['🌤️', '大致晴朗'],
+    2: ['⛅', '局部多雲'],
+    3: ['☁️', '陰天'],
+    45: ['🌫️', '有霧'], 48: ['🌫️', '霧淞'],
+    51: ['🌦️', '毛毛雨'], 53: ['🌦️', '毛毛雨'], 55: ['🌦️', '毛毛雨'],
+    56: ['🌧️', '凍雨'], 57: ['🌧️', '凍雨'],
+    61: ['🌧️', '小雨'], 63: ['🌧️', '中雨'], 65: ['🌧️', '大雨'],
+    66: ['🌧️', '凍雨'], 67: ['🌧️', '凍雨'],
+    71: ['❄️', '小雪'], 73: ['❄️', '中雪'], 75: ['❄️', '大雪'], 77: ['❄️', '雪粒'],
+    80: ['🌧️', '陣雨'], 81: ['🌧️', '陣雨'], 82: ['🌧️', '強陣雨'],
+    85: ['❄️', '陣雪'], 86: ['❄️', '強陣雪'],
+    95: ['⛈️', '雷雨'], 96: ['⛈️', '雷雨挾冰雹'], 99: ['⛈️', '雷雨挾冰雹']
+  };
+
+  function weatherFromCode(code){
+    return WEATHER_CODE_MAP[code] || ['🌤️', '天氣'];
+  }
+
+  function getBadge(day){
+    return document.querySelector('.weather-badge[data-weather-date="' + TARGET_DATES[day] + '"]');
+  }
+
+  function setBadge(day, icon, label, state){
+    var badge = getBadge(day);
+    if (!badge) return;
+    badge.querySelector('.weather-icon').textContent = icon;
+    badge.querySelector('.weather-label').textContent = label;
+    badge.classList.remove('is-loading', 'is-error');
+    if (state) badge.classList.add(state);
+  }
+
+  function indexDailyData(daily){
+    var byDate = {};
+    daily.time.forEach(function(dateStr, i){
+      byDate[dateStr] = {
+        code: daily.weather_code[i],
+        tmax: daily.temperature_2m_max[i],
+        tmin: daily.temperature_2m_min[i]
+      };
+    });
+    return byDate;
+  }
+
+  function fetchOsakaWeather(){
+    var url = 'https://api.open-meteo.com/v1/forecast'
+      + '?latitude=' + OSAKA_LAT
+      + '&longitude=' + OSAKA_LON
+      + '&daily=weather_code,temperature_2m_max,temperature_2m_min'
+      + '&timezone=' + encodeURIComponent('Asia/Tokyo')
+      + '&forecast_days=16';
+
+    fetch(url)
+      .then(function(res){
+        if (!res.ok) throw new Error('Open-Meteo API 錯誤：' + res.status);
+        return res.json();
+      })
+      .then(function(data){
+        var byDate = indexDailyData(data.daily);
+        Object.keys(TARGET_DATES).forEach(function(day){
+          var entry = byDate[TARGET_DATES[day]];
+          if (entry){
+            var info = weatherFromCode(entry.code);
+            var label = Math.round(entry.tmin) + '°–' + Math.round(entry.tmax) + '°C（' + info[1] + '）';
+            setBadge(day, info[0], label);
+          } else {
+            // 免費預報大約只看得到未來 16 天，太遠的日期會先顯示這個狀態，
+            // 等到接近日期，之後的自動刷新就會抓到真實預報
+            setBadge(day, '⏳', '尚無預報', 'is-loading');
+          }
+        });
+      })
+      .catch(function(err){
+        console.error(err);
+        Object.keys(TARGET_DATES).forEach(function(day){
+          setBadge(day, '⚠️', '無法取得', 'is-error');
+          var badge = getBadge(day);
+          if (badge) badge.title = '錯誤詳情：' + (err && err.message ? err.message : '未知錯誤');
+        });
+      });
+  }
+
+  fetchOsakaWeather();
+  setInterval(fetchOsakaWeather, WEATHER_REFRESH_MS);
 </script>
 
 </body>
