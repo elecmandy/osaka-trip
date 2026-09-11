@@ -148,6 +148,16 @@
     outline-offset:2px;
   }
 
+  .nav-extra{
+    margin-top:0.4rem;
+    padding-top:1.3rem;
+    border-top:1px dashed rgba(255,255,255,0.35);
+  }
+
+  .nav-btn-info::before{
+    display:none;
+  }
+
   /* ---------- Main content ---------- */
   .main{
     flex:1 1 auto;
@@ -225,6 +235,64 @@
     color:var(--slate);
   }
 
+  .info-heading{
+    font-family:'Noto Serif TC', serif;
+    font-weight:700;
+    font-size:1.25rem;
+    color:var(--navy);
+    margin:1.8rem 0 0.9rem;
+    display:flex;
+    align-items:center;
+    gap:0.5rem;
+  }
+
+  .info-heading:first-of-type{
+    margin-top:0;
+  }
+
+  .info-heading svg{
+    flex:0 0 auto;
+    width:20px;
+    height:20px;
+    color:var(--ocean);
+  }
+
+  .info-card{
+    background:var(--card-bg);
+    border:1px solid var(--sky-line);
+    border-radius:12px;
+    padding:1.2rem 1.3rem;
+    margin-bottom:1rem;
+  }
+
+  .info-card-label{
+    font-family:'Noto Serif TC', serif;
+    font-weight:700;
+    font-size:1.05rem;
+    color:var(--ocean-deep);
+    margin:0 0 0.8rem;
+  }
+
+  .info-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
+    gap:0.9rem 1.2rem;
+    margin:0;
+  }
+
+  .info-grid dt{
+    font-size:0.82rem;
+    color:var(--ocean);
+    margin:0 0 0.15rem;
+  }
+
+  .info-grid dd{
+    font-size:1.02rem;
+    color:var(--navy);
+    font-weight:500;
+    margin:0;
+  }
+
   @media (prefers-reduced-motion: reduce){
     .day-panel{ transition:none; }
   }
@@ -250,6 +318,14 @@
     .nav-list::before{ display:none; }
     .nav-btn::before{ display:none; }
     .nav-btn{ flex:0 0 auto; white-space:nowrap; }
+    .nav-extra{
+      margin-top:0;
+      padding-top:0;
+      border-top:none;
+      margin-left:0.4rem;
+      padding-left:0.6rem;
+      border-left:1px dashed rgba(255,255,255,0.35);
+    }
     .main{ padding:2.2rem 1.4rem; }
   }
 </style>
@@ -281,6 +357,12 @@
         <span class="nav-day">DAY 05</span><span class="nav-date">10/11（日）</span>
       </button></li>
     </ul>
+
+    <div class="nav-extra">
+      <button class="nav-btn nav-btn-info" id="tab-info" role="tab" aria-selected="false" aria-controls="panel-info" data-day="info">
+        <span class="nav-day">航班／住宿</span><span class="nav-date">Flight &amp; Hotel</span>
+      </button>
+    </div>
   </aside>
 
   <main class="main">
@@ -352,6 +434,56 @@
           <li>行程亮點 2（待填寫）</li>
           <li>行程亮點 3（待填寫）</li>
         </ul>
+      </div>
+    </section>
+
+    <section class="day-panel" id="panel-info" role="tabpanel" aria-labelledby="tab-info" data-day="info">
+      <div class="panel-inner">
+        <h2 class="panel-title">航班與住宿資訊</h2>
+        <p class="panel-intro">在此填寫本次旅程的航班與飯店資訊，方便隨時查詢。</p>
+
+        <h3 class="info-heading">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
+          航班資訊
+        </h3>
+
+        <div class="info-card">
+          <p class="info-card-label">去程</p>
+          <dl class="info-grid">
+            <div><dt>日期</dt><dd>10/7（三）</dd></div>
+            <div><dt>航班編號</dt><dd>〈待填寫〉</dd></div>
+            <div><dt>起飛時間</dt><dd>〈待填寫〉</dd></div>
+            <div><dt>抵達時間</dt><dd>〈待填寫〉</dd></div>
+            <div><dt>機場</dt><dd>〈待填寫〉</dd></div>
+          </dl>
+        </div>
+
+        <div class="info-card">
+          <p class="info-card-label">回程</p>
+          <dl class="info-grid">
+            <div><dt>日期</dt><dd>10/11（日）</dd></div>
+            <div><dt>航班編號</dt><dd>〈待填寫〉</dd></div>
+            <div><dt>起飛時間</dt><dd>〈待填寫〉</dd></div>
+            <div><dt>抵達時間</dt><dd>〈待填寫〉</dd></div>
+            <div><dt>機場</dt><dd>〈待填寫〉</dd></div>
+          </dl>
+        </div>
+
+        <h3 class="info-heading">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v7"></path><path d="M3 12h18"></path><path d="M7 12V9a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3"></path><path d="M3 18v2"></path><path d="M21 18v2"></path></svg>
+          住宿資訊
+        </h3>
+
+        <div class="info-card">
+          <p class="info-card-label">住宿地點</p>
+          <dl class="info-grid">
+            <div><dt>飯店名稱</dt><dd>〈待填寫〉</dd></div>
+            <div><dt>地址</dt><dd>〈待填寫〉</dd></div>
+            <div><dt>入住日期</dt><dd>10/7（三）</dd></div>
+            <div><dt>退房日期</dt><dd>10/11（日）</dd></div>
+            <div><dt>訂房編號</dt><dd>〈待填寫〉</dd></div>
+          </dl>
+        </div>
       </div>
     </section>
 
