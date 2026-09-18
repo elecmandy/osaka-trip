@@ -496,6 +496,35 @@
     outline-offset:2px;
   }
 
+  .en{
+    display:block;
+    font-size:0.78rem;
+    color:#8aa3b0;
+    font-weight:400;
+    line-height:1.4;
+    margin-top:1px;
+    letter-spacing:0.01em;
+  }
+
+  .panel-title .en{
+    font-family:'Noto Sans TC', sans-serif;
+    font-size:0.95rem;
+    color:var(--ocean);
+    margin-top:3px;
+  }
+
+  .sidebar .en{
+    color:#c5e6f2;
+  }
+
+  .map-preview-large{
+    margin-top:1.1rem;
+  }
+
+  .map-preview-large .map-preview-canvas{
+    height:340px;
+  }
+
   .map-entry{
     display:block;
     flex-basis:100%;
@@ -740,7 +769,7 @@
 
   <aside class="sidebar">
     <div>
-      <p class="sidebar-title">大阪五日遊行程 🌸</p>
+      <p class="sidebar-title">大阪五日遊行程 🌸<span class="en">Osaka 5-Day Itinerary</span></p>
       <p class="sidebar-sub">2026/10/7 − 10/11</p>
     </div>
 
@@ -777,7 +806,7 @@
     <section class="day-panel active" id="panel-day-1" role="tabpanel" aria-labelledby="tab-day-1" data-day="1">
       <div class="panel-inner">
         <p class="panel-daynum">01</p>
-        <h2 class="panel-title">抵達大阪・心齋橋道頓堀之夜</h2>
+        <h2 class="panel-title">抵達大阪・心齋橋道頓堀之夜<span class="en">Arrival in Osaka · Shinsaibashi &amp; Dotonbori Night</span></h2>
         <div class="panel-date-row">
           <p class="panel-date">10/7（三）</p>
           <div class="weather-badge is-loading" data-weather-date="2026-10-07">
@@ -807,7 +836,7 @@
               <span class="journey-time">16:00</span>
               <span class="journey-icon">🛬</span>
               <div class="journey-body">
-                <p class="journey-title">抵達關西機場（KIX）</p>
+                <p class="journey-title">抵達關西機場（KIX）<span class="en">Arrive at Kansai Airport (KIX)</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="關西國際機場 KIX" data-map-lat="34.432" data-map-lng="135.2304" data-map-gurl="https://www.google.com/maps/search/?api=1&query=關西國際機場">📍 地圖</button>
               <div class="map-preview" hidden>
@@ -825,7 +854,7 @@
               <span class="journey-time">16:30</span>
               <span class="journey-icon">🚄</span>
               <div class="journey-body">
-                <p class="journey-title">搭乘 Haruka 特急前往大阪市區</p>
+                <p class="journey-title">搭乘 Haruka 特急前往大阪市區<span class="en">Haruka Express to Osaka city</span></p>
               </div>
             </div>
           </li>
@@ -834,9 +863,27 @@
             <span class="journey-dot"></span>
             <div class="journey-card">
               <span class="journey-time">18:30</span>
+              <span class="journey-icon">🏨</span>
+              <div class="journey-body">
+                <p class="journey-title">Check in 酒店及休息（OCEAN 心齋橋東）<span class="en">Hotel check-in &amp; rest (OCEAN Shinsaibashi East)</span></p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="OCEAN 心齋橋東" data-map-lat="34.6725" data-map-lng="135.5045" data-map-gurl="https://maps.app.goo.gl/DyuGg4cSTGfsdxfs8">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://maps.app.goo.gl/DyuGg4cSTGfsdxfs8" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 30m</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">19:00</span>
               <span class="journey-icon">🛍️</span>
               <div class="journey-body">
-                <p class="journey-title">心齋橋 + 道頓堀</p>
+                <p class="journey-title">心齋橋 + 道頓堀<span class="en">Shinsaibashi + Dotonbori</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="心齋橋" data-map-lat="34.6717" data-map-lng="135.5013" data-map-gurl="https://www.google.com/maps/search/?api=1&query=心齋橋+大阪">📍 心齋橋</button>
               <div class="map-preview" hidden>
@@ -854,14 +901,14 @@
               </div>
             </div>
           </li>
-          <li class="journey-gap"><span class="journey-gap-badge">🕐 1h</span></li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 30m</span></li>
           <li class="journey-stop">
             <span class="journey-dot"></span>
             <div class="journey-card">
               <span class="journey-time">19:30</span>
               <span class="journey-icon">🍽️</span>
               <div class="journey-body">
-                <p class="journey-title">晚餐</p>
+                <p class="journey-title">晚餐<span class="en">Dinner</span></p>
               </div>
             </div>
           </li>
@@ -872,7 +919,7 @@
               <span class="journey-time">21:00</span>
               <span class="journey-icon">🌆</span>
               <div class="journey-body">
-                <p class="journey-title">道頓堀夜景</p>
+                <p class="journey-title">道頓堀夜景<span class="en">Dotonbori night view</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="道頓堀" data-map-lat="34.6687" data-map-lng="135.5013" data-map-gurl="https://www.google.com/maps/search/?api=1&query=道頓堀+大阪">📍 地圖</button>
               <div class="map-preview" hidden>
@@ -890,7 +937,7 @@
     <section class="day-panel" id="panel-day-2" role="tabpanel" aria-labelledby="tab-day-2" data-day="2">
       <div class="panel-inner">
         <p class="panel-daynum">02</p>
-        <h2 class="panel-title">難波周邊探索</h2>
+        <h2 class="panel-title">難波周邊探索<span class="en">Exploring Namba</span></h2>
         <div class="panel-date-row">
           <p class="panel-date">10/8（四）</p>
           <div class="weather-badge is-loading" data-weather-date="2026-10-08">
@@ -905,7 +952,7 @@
               <span class="journey-time">10:00</span>
               <span class="journey-icon">🍳</span>
               <div class="journey-body">
-                <p class="journey-title">早餐</p>
+                <p class="journey-title">早餐<span class="en">Breakfast</span></p>
               </div>
             </div>
           </li>
@@ -916,7 +963,7 @@
               <span class="journey-time">10:30</span>
               <span class="journey-icon">🏮</span>
               <div class="journey-body">
-                <p class="journey-title">黑門市場</p>
+                <p class="journey-title">黑門市場<span class="en">Kuromon Ichiba Market</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="黑門市場" data-map-lat="34.6653" data-map-lng="135.5065" data-map-gurl="https://www.google.com/maps/search/?api=1&query=黑門市場+大阪">📍 地圖</button>
               <div class="map-preview" hidden>
@@ -934,7 +981,7 @@
               <span class="journey-time">11:30</span>
               <span class="journey-icon">🛠️</span>
               <div class="journey-body">
-                <p class="journey-title">千日前道具屋筋商店街</p>
+                <p class="journey-title">千日前道具屋筋商店街<span class="en">Sennichimae Doguyasuji Shopping Street</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="千日前道具屋筋商店街" data-map-lat="34.6647" data-map-lng="135.5024" data-map-gurl="https://www.google.com/maps/search/?api=1&query=千日前道具屋筋商店街+大阪">📍 地圖</button>
               <div class="map-preview" hidden>
@@ -952,7 +999,7 @@
               <span class="journey-time">13:00</span>
               <span class="journey-icon">🍽️</span>
               <div class="journey-body">
-                <p class="journey-title">午餐</p>
+                <p class="journey-title">午餐<span class="en">Lunch</span></p>
               </div>
             </div>
           </li>
@@ -963,7 +1010,7 @@
               <span class="journey-time">13:30</span>
               <span class="journey-icon">🛍️</span>
               <div class="journey-body">
-                <p class="journey-title">Namba City</p>
+                <p class="journey-title">Namba City<span class="en">Namba City</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="Namba City" data-map-lat="34.6634" data-map-lng="135.501" data-map-gurl="https://www.google.com/maps/search/?api=1&query=Namba+City+大阪">📍 地圖</button>
               <div class="map-preview" hidden>
@@ -981,7 +1028,7 @@
               <span class="journey-time">15:30</span>
               <span class="journey-icon">⛩️</span>
               <div class="journey-body">
-                <p class="journey-title">難波八阪神社</p>
+                <p class="journey-title">難波八阪神社<span class="en">Namba Yasaka Shrine</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="難波八阪神社" data-map-lat="34.6602" data-map-lng="135.4954" data-map-gurl="https://www.google.com/maps/search/?api=1&query=難波八阪神社+大阪">📍 地圖</button>
               <div class="map-preview" hidden>
@@ -999,7 +1046,7 @@
               <span class="journey-time">17:30</span>
               <span class="journey-icon">🛍️</span>
               <div class="journey-body">
-                <p class="journey-title">Namba Parks</p>
+                <p class="journey-title">Namba Parks<span class="en">Namba Parks</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="Namba Parks" data-map-lat="34.6626" data-map-lng="135.5008" data-map-gurl="https://www.google.com/maps/search/?api=1&query=Namba+Parks+大阪">📍 地圖</button>
               <div class="map-preview" hidden>
@@ -1017,7 +1064,7 @@
     <section class="day-panel" id="panel-day-3" role="tabpanel" aria-labelledby="tab-day-3" data-day="3">
       <div class="panel-inner">
         <p class="panel-daynum">03</p>
-        <h2 class="panel-title">通天閣・大阪城・梅田</h2>
+        <h2 class="panel-title">通天閣・大阪城・梅田<span class="en">Tsutenkaku · Osaka Castle · Umeda</span></h2>
         <div class="panel-date-row">
           <p class="panel-date">10/9（五）</p>
           <div class="weather-badge is-loading" data-weather-date="2026-10-09">
@@ -1032,7 +1079,7 @@
               <span class="journey-time">11:00</span>
               <span class="journey-icon">🗼</span>
               <div class="journey-body">
-                <p class="journey-title">通天閣 + 新世界</p>
+                <p class="journey-title">通天閣 + 新世界<span class="en">Tsutenkaku + Shinsekai</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="通天閣" data-map-lat="34.6524" data-map-lng="135.5063" data-map-gurl="https://www.google.com/maps/search/?api=1&query=通天閣+大阪">📍 通天閣</button>
               <div class="map-preview" hidden>
@@ -1057,7 +1104,7 @@
               <span class="journey-time">13:00</span>
               <span class="journey-icon">🏯</span>
               <div class="journey-body">
-                <p class="journey-title">大阪城</p>
+                <p class="journey-title">大阪城<span class="en">Osaka Castle</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="大阪城" data-map-lat="34.6873" data-map-lng="135.5262" data-map-gurl="https://www.google.com/maps/search/?api=1&query=大阪城">📍 地圖</button>
               <div class="map-preview" hidden>
@@ -1075,7 +1122,7 @@
               <span class="journey-time">15:30</span>
               <span class="journey-icon">🏙️</span>
               <div class="journey-body">
-                <p class="journey-title">梅田</p>
+                <p class="journey-title">梅田<span class="en">Umeda</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="梅田" data-map-lat="34.7024" data-map-lng="135.4959" data-map-gurl="https://www.google.com/maps/search/?api=1&query=梅田+大阪">📍 地圖</button>
               <div class="map-preview" hidden>
@@ -1093,7 +1140,7 @@
               <span class="journey-time">16:00</span>
               <span class="journey-icon">🛍️</span>
               <div class="journey-body">
-                <p class="journey-title">大丸百貨</p>
+                <p class="journey-title">大丸百貨<span class="en">Daimaru Department Store</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="大丸梅田店" data-map-lat="34.702" data-map-lng="135.4959" data-map-gurl="https://www.google.com/maps/search/?api=1&query=大丸梅田店">📍 地圖</button>
               <div class="map-preview" hidden>
@@ -1111,7 +1158,7 @@
               <span class="journey-time">17:00</span>
               <span class="journey-icon">🎡</span>
               <div class="journey-body">
-                <p class="journey-title">HEP FIVE</p>
+                <p class="journey-title">HEP FIVE<span class="en">HEP FIVE</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="HEP FIVE" data-map-lat="34.7038" data-map-lng="135.5013" data-map-gurl="https://www.google.com/maps/search/?api=1&query=HEP+FIVE+大阪">📍 地圖</button>
               <div class="map-preview" hidden>
@@ -1129,7 +1176,7 @@
               <span class="journey-time">19:00</span>
               <span class="journey-icon">🛍️</span>
               <div class="journey-body">
-                <p class="journey-title">心齋橋</p>
+                <p class="journey-title">心齋橋<span class="en">Shinsaibashi</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="心齋橋" data-map-lat="34.6717" data-map-lng="135.5013" data-map-gurl="https://www.google.com/maps/search/?api=1&query=心齋橋+大阪">📍 地圖</button>
               <div class="map-preview" hidden>
@@ -1147,7 +1194,7 @@
     <section class="day-panel" id="panel-day-4" role="tabpanel" aria-labelledby="tab-day-4" data-day="4">
       <div class="panel-inner">
         <p class="panel-daynum">04</p>
-        <h2 class="panel-title">嵐山京都一日遊</h2>
+        <h2 class="panel-title">嵐山京都一日遊<span class="en">Arashiyama &amp; Kyoto Day Tour</span></h2>
         <div class="panel-date-row">
           <p class="panel-date">10/10（六）</p>
           <div class="weather-badge is-loading" data-weather-date="2026-10-10">
@@ -1162,7 +1209,7 @@
               <span class="journey-time">08:00</span>
               <span class="journey-icon">🚌</span>
               <div class="journey-body">
-                <p class="journey-title">集合出發（一日團，約 08:00–18:00）</p>
+                <p class="journey-title">集合出發（一日團，約 08:00–18:00）<span class="en">Meet &amp; depart (day tour, approx. 08:00–18:00)</span></p>
               </div>
             </div>
           </li>
@@ -1173,7 +1220,7 @@
               <span class="journey-time">09:00</span>
               <span class="journey-icon">🙏</span>
               <div class="journey-body">
-                <p class="journey-title">勝尾寺</p>
+                <p class="journey-title">勝尾寺<span class="en">Katsuo-ji Temple</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="勝尾寺" data-map-lat="34.8494" data-map-lng="135.4813" data-map-gurl="https://www.google.com/maps/search/?api=1&query=勝尾寺">📍 地圖</button>
               <div class="map-preview" hidden>
@@ -1191,7 +1238,7 @@
               <span class="journey-time">09:30</span>
               <span class="journey-icon">🗺️</span>
               <div class="journey-body">
-                <p class="journey-title">關西遊</p>
+                <p class="journey-title">關西遊<span class="en">Kansai sightseeing</span></p>
               </div>
             </div>
           </li>
@@ -1202,7 +1249,7 @@
               <span class="journey-time">10:00</span>
               <span class="journey-icon">🎋</span>
               <div class="journey-body">
-                <p class="journey-title">嵐山竹林</p>
+                <p class="journey-title">嵐山竹林<span class="en">Arashiyama Bamboo Grove</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="嵐山竹林小徑" data-map-lat="35.017" data-map-lng="135.672" data-map-gurl="https://www.google.com/maps/search/?api=1&query=嵐山竹林小徑">📍 地圖</button>
               <div class="map-preview" hidden>
@@ -1220,7 +1267,7 @@
               <span class="journey-time">18:00</span>
               <span class="journey-icon">🚌</span>
               <div class="journey-body">
-                <p class="journey-title">一日團解散（心齋橋）</p>
+                <p class="journey-title">一日團解散（心齋橋）<span class="en">Day tour ends (Shinsaibashi)</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="心齋橋" data-map-lat="34.6717" data-map-lng="135.5013" data-map-gurl="https://www.google.com/maps/search/?api=1&query=心齋橋+大阪">📍 地圖</button>
               <div class="map-preview" hidden>
@@ -1238,7 +1285,7 @@
               <span class="journey-time">19:00</span>
               <span class="journey-icon">🛍️</span>
               <div class="journey-body">
-                <p class="journey-title">心齋橋</p>
+                <p class="journey-title">心齋橋<span class="en">Shinsaibashi</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="心齋橋" data-map-lat="34.6717" data-map-lng="135.5013" data-map-gurl="https://www.google.com/maps/search/?api=1&query=心齋橋+大阪">📍 地圖</button>
               <div class="map-preview" hidden>
@@ -1256,7 +1303,7 @@
     <section class="day-panel" id="panel-day-5" role="tabpanel" aria-labelledby="tab-day-5" data-day="5">
       <div class="panel-inner">
         <p class="panel-daynum">05</p>
-        <h2 class="panel-title">退房・Outlet・返程</h2>
+        <h2 class="panel-title">退房・Outlet・返程<span class="en">Check-out · Outlet · Departure</span></h2>
         <div class="panel-date-row">
           <p class="panel-date">10/11（日）</p>
           <div class="weather-badge is-loading" data-weather-date="2026-10-11">
@@ -1271,7 +1318,7 @@
               <span class="journey-time">10:00</span>
               <span class="journey-icon">🧳</span>
               <div class="journey-body">
-                <p class="journey-title">飯店 Check out</p>
+                <p class="journey-title">飯店 Check out<span class="en">Hotel check-out</span></p>
               </div>
             </div>
           </li>
@@ -1282,7 +1329,7 @@
               <span class="journey-time">11:00</span>
               <span class="journey-icon">☕</span>
               <div class="journey-body">
-                <p class="journey-title">Cafe</p>
+                <p class="journey-title">Cafe<span class="en">Cafe</span></p>
               </div>
             </div>
           </li>
@@ -1293,7 +1340,14 @@
               <span class="journey-time">12:30</span>
               <span class="journey-icon">🛍️</span>
               <div class="journey-body">
-                <p class="journey-title">Outlet 購物</p>
+                <p class="journey-title">臨空城 Outlet<span class="en">Rinku Premium Outlets</span></p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="臨空城 Outlet Rinku Premium Outlets" data-map-lat="34.4103" data-map-lng="135.2977" data-map-gurl="https://www.google.com/maps/search/?api=1&query=Rinku+Premium+Outlets">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=Rinku+Premium+Outlets" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
               </div>
             </div>
           </li>
@@ -1319,7 +1373,7 @@
               <span class="journey-time">23:30</span>
               <span class="journey-icon">🛬</span>
               <div class="journey-body">
-                <p class="journey-title">HX613 抵達香港（23:50）</p>
+                <p class="journey-title">HX613 抵達香港（23:50）<span class="en">HX613 arrives Hong Kong (23:50)</span></p>
                 <span class="map-entry">
               <button type="button" class="map-link" data-map-name="香港國際機場 HKG" data-map-lat="22.308" data-map-lng="113.9185" data-map-gurl="https://www.google.com/maps/search/?api=1&query=香港國際機場">📍 地圖</button>
               <div class="map-preview" hidden>
@@ -1336,57 +1390,61 @@
 
     <section class="day-panel" id="panel-info" role="tabpanel" aria-labelledby="tab-info" data-day="info">
       <div class="panel-inner">
-        <h2 class="panel-title">航班與住宿資訊</h2>
+        <h2 class="panel-title">航班與住宿資訊<span class="en">Flight &amp; Accommodation</span></h2>
         <p class="panel-intro">在此填寫本次旅程的航班與飯店資訊，方便隨時查詢。</p>
 
         <h3 class="info-heading">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
-          航班資訊
+          航班資訊<span class="en">Flights</span>
         </h3>
 
         <div class="info-card">
-          <p class="info-card-label">去程</p>
+          <p class="info-card-label">去程<span class="en">Outbound</span></p>
           <dl class="info-grid">
-            <div><dt>日期</dt><dd>10/7（三）</dd></div>
-            <div><dt>航班編號</dt><dd>HX618</dd></div>
-            <div><dt>起飛時間</dt><dd>10:55（香港 HKG）</dd></div>
-            <div><dt>抵達時間</dt><dd>16:00（關西 KIX）</dd></div>
-            <div><dt>機場</dt><dd>香港 → 關西</dd></div>
+            <div><dt>日期 / Date</dt><dd>10/7（三）</dd></div>
+            <div><dt>航班編號 / Flight No.</dt><dd>HX618</dd></div>
+            <div><dt>起飛時間 / Departure</dt><dd>10:55（香港 HKG）</dd></div>
+            <div><dt>抵達時間 / Arrival</dt><dd>16:00（關西 KIX）</dd></div>
+            <div><dt>機場 / Airport</dt><dd>香港 → 關西</dd></div>
           </dl>
         </div>
 
         <div class="info-card">
-          <p class="info-card-label">回程</p>
+          <p class="info-card-label">回程<span class="en">Return</span></p>
           <dl class="info-grid">
-            <div><dt>日期</dt><dd>10/11（日）</dd></div>
-            <div><dt>航班編號</dt><dd>HX613</dd></div>
-            <div><dt>起飛時間</dt><dd>20:20（關西 KIX）</dd></div>
-            <div><dt>抵達時間</dt><dd>23:50（香港 HKG）</dd></div>
-            <div><dt>機場</dt><dd>關西 → 香港</dd></div>
+            <div><dt>日期 / Date</dt><dd>10/11（日）</dd></div>
+            <div><dt>航班編號 / Flight No.</dt><dd>HX613</dd></div>
+            <div><dt>起飛時間 / Departure</dt><dd>20:20（關西 KIX）</dd></div>
+            <div><dt>抵達時間 / Arrival</dt><dd>23:50（香港 HKG）</dd></div>
+            <div><dt>機場 / Airport</dt><dd>關西 → 香港</dd></div>
           </dl>
         </div>
 
         <h3 class="info-heading">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v7"></path><path d="M3 12h18"></path><path d="M7 12V9a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3"></path><path d="M3 18v2"></path><path d="M21 18v2"></path></svg>
-          住宿資訊
+          住宿資訊<span class="en">Accommodation</span>
         </h3>
 
         <div class="info-card">
-          <p class="info-card-label">住宿地點</p>
+          <p class="info-card-label">住宿地點<span class="en">Accommodation</span></p>
           <dl class="info-grid">
-            <div><dt>飯店名稱</dt><dd>〈待填寫〉</dd></div>
-            <div><dt>地址</dt><dd>〈待填寫〉</dd></div>
-            <div><dt>入住日期</dt><dd>10/7（三）</dd></div>
-            <div><dt>退房日期</dt><dd>10/11（日）</dd></div>
-            <div><dt>訂房編號</dt><dd>〈待填寫〉</dd></div>
+            <div><dt>飯店名稱 / Hotel</dt><dd>OCEAN 心齋橋東<span class="en">OCEAN Shinsaibashi East</span></dd></div>
+            <div><dt>地址 / Address</dt><dd>1 Chome-4-20 Shimanouchi, Chuo Ward, Osaka, 542-0082</dd></div>
+            <div><dt>入住日期 / Check-in</dt><dd>10/7（三）</dd></div>
+            <div><dt>退房日期 / Check-out</dt><dd>10/11（日）</dd></div>
           </dl>
+
+          <div class="map-preview map-preview-large" data-map-name="OCEAN 心齋橋東" data-map-lat="34.6725" data-map-lng="135.5045" data-map-auto="1">
+            <div class="map-preview-canvas"></div>
+            <a class="map-preview-open" href="https://maps.app.goo.gl/DyuGg4cSTGfsdxfs8" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="day-panel" id="panel-rail" role="tabpanel" aria-labelledby="tab-rail" data-day="rail">
       <div class="panel-inner panel-inner-wide">
-        <h2 class="panel-title">關西鐵路路網示意圖</h2>
+        <h2 class="panel-title">關西鐵路路網示意圖<span class="en">Kansai Rail Network Map</span></h2>
         <p class="panel-intro">盡量涵蓋大阪、京都、神戶、奈良、和歌山、關西機場之間嘅主要鐵路走線（簡化示意，非依實際比例、非官方地圖）。大阪市中心地鐵詳圖放喺虛線框內，特別標示「心齋橋」與「長堀橋」兩個轉乘站。畫面可以用右上角按鈕、滑鼠滾輪或手指縮放，亦都可以拖曳平移。</p>
 
         <div class="info-card">
@@ -1407,12 +1465,14 @@
                 <text x="250" y="252" text-anchor="middle" font-size="12" fill="#4a6572">尼崎</text>
                 <circle cx="110" cy="300" r="11" fill="#123c55" stroke="#ffffff" stroke-width="3"></circle>
                 <text x="110" y="278" text-anchor="middle" font-size="17" font-weight="700" fill="#123c55">神戶</text>
+                <text x="110" y="293" text-anchor="middle" font-size="11" fill="#5b7d91">Kobe</text>
                 <text x="180" y="335" text-anchor="middle" font-size="13" fill="#2c4a63">JR／阪急／阪神</text>
 
                 <!-- 往寶塚 -->
                 <line x1="550" y1="220" x2="330" y2="70" stroke="#c99a2e" stroke-width="7" stroke-linecap="round"></line>
                 <circle cx="330" cy="70" r="11" fill="#123c55" stroke="#ffffff" stroke-width="3"></circle>
                 <text x="330" y="50" text-anchor="middle" font-size="17" font-weight="700" fill="#123c55">寶塚</text>
+                <text x="330" y="65" text-anchor="middle" font-size="11" fill="#5b7d91">Takarazuka</text>
                 <text x="430" y="130" text-anchor="middle" font-size="13" fill="#2c4a63">阪急寶塚線</text>
 
                 <!-- 往京都 -->
@@ -1421,6 +1481,7 @@
                 <text x="660" y="132" text-anchor="middle" font-size="12" fill="#4a6572">新大阪</text>
                 <circle cx="1080" cy="90" r="11" fill="#123c55" stroke="#ffffff" stroke-width="3"></circle>
                 <text x="1080" y="68" text-anchor="middle" font-size="17" font-weight="700" fill="#123c55">京都</text>
+                <text x="1080" y="83" text-anchor="middle" font-size="11" fill="#5b7d91">Kyoto</text>
                 <text x="870" y="105" text-anchor="middle" font-size="13" fill="#2c4a63">JR／阪急／京阪</text>
 
                 <!-- 往奈良 -->
@@ -1429,6 +1490,7 @@
                 <text x="960" y="630" text-anchor="middle" font-size="12" fill="#4a6572">鶴橋</text>
                 <circle cx="1150" cy="650" r="11" fill="#123c55" stroke="#ffffff" stroke-width="3"></circle>
                 <text x="1150" y="628" text-anchor="middle" font-size="17" font-weight="700" fill="#123c55">奈良</text>
+                <text x="1150" y="643" text-anchor="middle" font-size="11" fill="#5b7d91">Nara</text>
                 <text x="1010" y="670" text-anchor="middle" font-size="13" fill="#2c4a63">近鐵／JR</text>
 
                 <!-- 往關西機場・和歌山 -->
@@ -1438,10 +1500,24 @@
                 <line x1="650" y1="850" x2="600" y2="950" stroke="#1e8a7a" stroke-width="8" stroke-linecap="round"></line>
                 <circle cx="600" cy="950" r="11" fill="#123c55" stroke="#ffffff" stroke-width="3"></circle>
                 <text x="600" y="978" text-anchor="middle" font-size="16" font-weight="700" fill="#123c55">關西機場</text>
+                <text x="600" y="995" text-anchor="middle" font-size="11" fill="#5b7d91">Kansai Airport</text>
                 <line x1="650" y1="850" x2="780" y2="1010" stroke="#1e8a7a" stroke-width="8" stroke-linecap="round"></line>
                 <circle cx="780" cy="1010" r="11" fill="#123c55" stroke="#ffffff" stroke-width="3"></circle>
                 <text x="780" y="1038" text-anchor="middle" font-size="16" font-weight="700" fill="#123c55">和歌山</text>
+                <text x="780" y="1055" text-anchor="middle" font-size="11" fill="#5b7d91">Wakayama</text>
                 <text x="500" y="770" text-anchor="middle" font-size="13" fill="#2c4a63">南海／JR阪和線</text>
+
+                <!-- 箕面（勝尾寺，Day 4） -->
+                <line x1="550" y1="220" x2="620" y2="95" stroke="#c99a2e" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 6"></line>
+                <circle cx="620" cy="95" r="9" fill="#ffffff" stroke="#c99a2e" stroke-width="4"></circle>
+                <text x="620" y="76" text-anchor="middle" font-size="15" font-weight="700" fill="#123c55">箕面・勝尾寺</text>
+                <text x="620" y="60" text-anchor="middle" font-size="11" fill="#5b7d91">Minoh / Katsuo-ji</text>
+
+                <!-- 嵐山（Day 4） -->
+                <line x1="1080" y1="90" x2="940" y2="175" stroke="#b0468c" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 6"></line>
+                <circle cx="940" cy="175" r="9" fill="#ffffff" stroke="#b0468c" stroke-width="4"></circle>
+                <text x="940" y="200" text-anchor="middle" font-size="15" font-weight="700" fill="#123c55">嵐山</text>
+                <text x="940" y="215" text-anchor="middle" font-size="11" fill="#5b7d91">Arashiyama</text>
 
                 <!-- ===== 大阪市中心地鐵詳圖（放大可查看站名） ===== -->
                 <rect x="285" y="180" width="645" height="480" rx="18" fill="none" stroke="#8fc1d6" stroke-width="2" stroke-dasharray="6 6"></rect>
@@ -1457,51 +1533,74 @@
 
                   <!-- 長堀鶴見緑地線（綠線）一般車站 -->
                   <circle cx="80" cy="360" r="8" fill="#ffffff" stroke="#6fb92c" stroke-width="4"></circle>
-                  <text x="80" y="342" text-anchor="middle" font-size="14" fill="#4a6572">西長堀</text>
+                  <text x="80" y="330" text-anchor="middle" font-size="14" fill="#4a6572">西長堀</text>
+                  <text x="80" y="342" text-anchor="middle" font-size="10" fill="#8aa3b0">Nishinagahori</text>
 
                   <circle cx="190" cy="360" r="8" fill="#ffffff" stroke="#6fb92c" stroke-width="4"></circle>
-                  <text x="190" y="342" text-anchor="middle" font-size="14" fill="#4a6572">西大橋</text>
+                  <text x="190" y="330" text-anchor="middle" font-size="14" fill="#4a6572">西大橋</text>
+                  <text x="190" y="342" text-anchor="middle" font-size="10" fill="#8aa3b0">Nishiohashi</text>
 
                   <circle cx="520" cy="360" r="8" fill="#ffffff" stroke="#6fb92c" stroke-width="4"></circle>
-                  <text x="520" y="342" text-anchor="middle" font-size="14" fill="#4a6572">松屋町</text>
+                  <text x="520" y="330" text-anchor="middle" font-size="14" fill="#4a6572">松屋町</text>
+                  <text x="520" y="342" text-anchor="middle" font-size="10" fill="#8aa3b0">Matsuyamachi</text>
 
                   <circle cx="630" cy="360" r="8" fill="#ffffff" stroke="#6fb92c" stroke-width="4"></circle>
-                  <text x="630" y="342" text-anchor="middle" font-size="14" fill="#4a6572">谷町六丁目</text>
+                  <text x="630" y="330" text-anchor="middle" font-size="14" fill="#4a6572">谷町六丁目</text>
+                  <text x="630" y="342" text-anchor="middle" font-size="10" fill="#8aa3b0">Tanimachi 6-chome</text>
 
                   <!-- 御堂筋線（紅線）一般車站 -->
                   <circle cx="300" cy="70" r="8" fill="#ffffff" stroke="#d7263d" stroke-width="4"></circle>
-                  <text x="316" y="75" text-anchor="start" font-size="14" fill="#4a6572">梅田</text>
+                  <text x="316" y="70" text-anchor="start" font-size="14" fill="#4a6572">梅田</text>
+                  <text x="316" y="83" text-anchor="start" font-size="10" fill="#8aa3b0">Umeda</text>
 
                   <circle cx="300" cy="150" r="8" fill="#ffffff" stroke="#d7263d" stroke-width="4"></circle>
-                  <text x="316" y="155" text-anchor="start" font-size="14" fill="#4a6572">淀屋橋</text>
+                  <text x="316" y="150" text-anchor="start" font-size="14" fill="#4a6572">淀屋橋</text>
+                  <text x="316" y="163" text-anchor="start" font-size="10" fill="#8aa3b0">Yodoyabashi</text>
 
                   <circle cx="300" cy="240" r="8" fill="#ffffff" stroke="#d7263d" stroke-width="4"></circle>
-                  <text x="316" y="245" text-anchor="start" font-size="14" fill="#4a6572">本町</text>
+                  <text x="316" y="240" text-anchor="start" font-size="14" fill="#4a6572">本町</text>
+                  <text x="316" y="253" text-anchor="start" font-size="10" fill="#8aa3b0">Hommachi</text>
 
                   <circle cx="300" cy="440" r="8" fill="#ffffff" stroke="#d7263d" stroke-width="4"></circle>
-                  <text x="316" y="445" text-anchor="start" font-size="14" fill="#4a6572">難波</text>
+                  <text x="316" y="440" text-anchor="start" font-size="14" fill="#4a6572">難波</text>
+                  <text x="316" y="453" text-anchor="start" font-size="10" fill="#8aa3b0">Namba</text>
 
                   <circle cx="300" cy="520" r="8" fill="#ffffff" stroke="#d7263d" stroke-width="4"></circle>
-                  <text x="316" y="525" text-anchor="start" font-size="14" fill="#4a6572">天王寺</text>
+                  <text x="316" y="520" text-anchor="start" font-size="14" fill="#4a6572">天王寺</text>
+                  <text x="316" y="533" text-anchor="start" font-size="10" fill="#8aa3b0">Tennoji</text>
 
                   <!-- 堺筋線（棕線）一般車站 -->
                   <circle cx="410" cy="260" r="8" fill="#ffffff" stroke="#8a6240" stroke-width="4"></circle>
-                  <text x="426" y="265" text-anchor="start" font-size="14" fill="#4a6572">堺筋本町</text>
+                  <text x="426" y="260" text-anchor="start" font-size="14" fill="#4a6572">堺筋本町</text>
+                  <text x="426" y="273" text-anchor="start" font-size="10" fill="#8aa3b0">Sakaisuji-Hommachi</text>
 
                   <circle cx="410" cy="460" r="8" fill="#ffffff" stroke="#8a6240" stroke-width="4"></circle>
-                  <text x="426" y="465" text-anchor="start" font-size="14" fill="#4a6572">日本橋</text>
+                  <text x="426" y="460" text-anchor="start" font-size="14" fill="#4a6572">日本橋</text>
+                  <text x="426" y="473" text-anchor="start" font-size="10" fill="#8aa3b0">Nippombashi</text>
+
+                  <!-- 行程沿途站點 -->
+                  <circle cx="300" cy="490" r="8" fill="#ffffff" stroke="#d7263d" stroke-width="4"></circle>
+                  <text x="316" y="485" text-anchor="start" font-size="14" fill="#4a6572">動物園前</text>
+                  <text x="316" y="498" text-anchor="start" font-size="10" fill="#8aa3b0">Dobutsuen-mae／通天閣</text>
+
+                  <circle cx="630" cy="290" r="8" fill="#ffffff" stroke="#8a5fa8" stroke-width="4"></circle>
+                  <text x="646" y="285" text-anchor="start" font-size="14" fill="#4a6572">谷町四丁目</text>
+                  <text x="646" y="298" text-anchor="start" font-size="10" fill="#8aa3b0">Tanimachi 4-chome／大阪城</text>
+                  <line x1="630" y1="290" x2="630" y2="360" stroke="#8a5fa8" stroke-width="7" stroke-linecap="round"></line>
 
                   <!-- 心齋橋（御堂筋線 × 長堀鶴見緑地線）highlight -->
                   <circle cx="300" cy="360" r="20" fill="#f5a623" opacity="0.25"></circle>
                   <circle cx="300" cy="360" r="12" fill="#ffffff" stroke="#f5a623" stroke-width="4"></circle>
                   <rect x="261" y="378" width="78" height="26" rx="13" fill="#fff8ec" stroke="#f5a623" stroke-width="1.5"></rect>
-                  <text x="300" y="396" text-anchor="middle" font-size="15" font-weight="700" fill="#8a4b12">心齋橋</text>
+                  <text x="300" y="394" text-anchor="middle" font-size="15" font-weight="700" fill="#8a4b12">心齋橋</text>
+                  <text x="300" y="416" text-anchor="middle" font-size="11" fill="#a06a2c">Shinsaibashi</text>
 
                   <!-- 長堀橋（堺筋線 × 長堀鶴見緑地線）highlight -->
                   <circle cx="410" cy="360" r="20" fill="#f5a623" opacity="0.25"></circle>
                   <circle cx="410" cy="360" r="12" fill="#ffffff" stroke="#f5a623" stroke-width="4"></circle>
                   <rect x="371" y="378" width="78" height="26" rx="13" fill="#fff8ec" stroke="#f5a623" stroke-width="1.5"></rect>
-                  <text x="410" y="396" text-anchor="middle" font-size="15" font-weight="700" fill="#8a4b12">長堀橋</text>
+                  <text x="410" y="394" text-anchor="middle" font-size="15" font-weight="700" fill="#8a4b12">長堀橋</text>
+                  <text x="410" y="416" text-anchor="middle" font-size="11" fill="#a06a2c">Nagahoribashi</text>
 
                 </g>
 
@@ -1510,15 +1609,16 @@
           </div>
 
           <div class="rail-legend">
-            <span class="rail-legend-item"><span class="rail-dot" style="background:#d7263d"></span>御堂筋線</span>
-            <span class="rail-legend-item"><span class="rail-dot" style="background:#6fb92c"></span>長堀鶴見緑地線</span>
-            <span class="rail-legend-item"><span class="rail-dot" style="background:#8a6240"></span>堺筋線</span>
+            <span class="rail-legend-item"><span class="rail-dot" style="background:#d7263d"></span>御堂筋線<span class="en">Midosuji Line</span></span>
+            <span class="rail-legend-item"><span class="rail-dot" style="background:#6fb92c"></span>長堀鶴見緑地線<span class="en">Nagahori Tsurumi-ryokuchi Line</span></span>
+            <span class="rail-legend-item"><span class="rail-dot" style="background:#8a6240"></span>堺筋線<span class="en">Sakaisuji Line</span></span>
+            <span class="rail-legend-item"><span class="rail-dot" style="background:#8a5fa8"></span>谷町線<span class="en">Tanimachi Line</span></span>
             <span class="rail-legend-item"><span class="rail-dot" style="background:#e8792c"></span>JR／阪急／阪神（神戶）</span>
             <span class="rail-legend-item"><span class="rail-dot" style="background:#c99a2e"></span>阪急寶塚線</span>
             <span class="rail-legend-item"><span class="rail-dot" style="background:#b0468c"></span>JR／阪急／京阪（京都）</span>
             <span class="rail-legend-item"><span class="rail-dot" style="background:#2c4a7c"></span>近鐵／JR（奈良）</span>
             <span class="rail-legend-item"><span class="rail-dot" style="background:#1e8a7a"></span>南海／JR阪和線（機場・和歌山）</span>
-            <span class="rail-legend-item"><span class="rail-dot rail-dot-highlight"></span>重點轉乘站</span>
+            <span class="rail-legend-item"><span class="rail-dot rail-dot-highlight"></span>重點轉乘站<span class="en">Key transfer stations</span></span>
           </div>
         </div>
       </div>
@@ -1759,6 +1859,17 @@
     if (typeof L === 'undefined') return;
     var mapInstances = {};
 
+    function buildMap(uid, lat, lng, name){
+      var map = L.map(uid, { scrollWheelZoom: false }).setView([lat, lng], 16);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+      L.marker([lat, lng]).addTo(map).bindPopup(name).openPopup();
+      mapInstances[uid] = map;
+      return map;
+    }
+
     document.querySelectorAll('.map-link').forEach(function(btn, idx){
       var wrap = btn.closest('.map-entry');
       var preview = wrap ? wrap.querySelector('.map-preview') : null;
@@ -1768,25 +1879,47 @@
       canvas.id = uid;
 
       btn.addEventListener('click', function(){
-        var willShow = preview.hidden;
-        preview.hidden = !willShow;
-
+        preview.hidden = !preview.hidden;
         if (!preview.hidden){
           if (!mapInstances[uid]){
-            var lat = parseFloat(btn.dataset.mapLat);
-            var lng = parseFloat(btn.dataset.mapLng);
-            var name = btn.dataset.mapName;
-            var map = L.map(uid, { scrollWheelZoom: false }).setView([lat, lng], 16);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-              maxZoom: 19,
-              attribution: '&copy; OpenStreetMap contributors'
-            }).addTo(map);
-            L.marker([lat, lng]).addTo(map).bindPopup(name).openPopup();
-            mapInstances[uid] = map;
+            buildMap(uid, parseFloat(btn.dataset.mapLat), parseFloat(btn.dataset.mapLng), btn.dataset.mapName);
           } else {
             window.setTimeout(function(){ mapInstances[uid].invalidateSize(); }, 60);
           }
         }
+      });
+    });
+
+    // 自動載入的大地圖（住宿頁）
+    var autoMaps = [];
+    document.querySelectorAll('.map-preview[data-map-auto]').forEach(function(box, i){
+      var canvas = box.querySelector('.map-preview-canvas');
+      var uid = 'mapAuto' + i;
+      canvas.id = uid;
+      autoMaps.push({ uid: uid, box: box, built: false });
+    });
+
+    window.buildAutoMaps = function(){
+      autoMaps.forEach(function(item){
+        var box = item.box;
+        if (!item.built){
+          buildMap(item.uid, parseFloat(box.dataset.mapLat), parseFloat(box.dataset.mapLng), box.dataset.mapName);
+          item.built = true;
+        } else {
+          mapInstances[item.uid].invalidateSize();
+        }
+      });
+    };
+
+    // 分頁切換後修正地圖尺寸（隱藏時 Leaflet 量唔到正確大小）
+    document.querySelectorAll('.nav-btn').forEach(function(b){
+      b.addEventListener('click', function(){
+        window.setTimeout(function(){
+          if (window.buildAutoMaps) window.buildAutoMaps();
+          Object.keys(mapInstances).forEach(function(k){
+            mapInstances[k].invalidateSize();
+          });
+        }, 400);
       });
     });
   })();
