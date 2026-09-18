@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
   :root{
     --bg-top:#eaf6fb;
@@ -152,6 +154,9 @@
     margin-top:0.4rem;
     padding-top:1.3rem;
     border-top:1px dashed rgba(255,255,255,0.35);
+    display:flex;
+    flex-direction:column;
+    gap:0.6rem;
   }
 
   .nav-btn-info::before{
@@ -327,6 +332,369 @@
     margin:0;
   }
 
+  .panel-inner-wide{
+    max-width:1100px;
+  }
+
+  .rail-map-wrap{
+    position:relative;
+  }
+
+  .rail-map-controls{
+    position:absolute;
+    top:10px;
+    right:10px;
+    z-index:2;
+    display:flex;
+    gap:0.4rem;
+  }
+
+  .rail-zoom-btn{
+    width:36px;
+    height:36px;
+    border-radius:8px;
+    border:1px solid var(--sky-line);
+    background:#ffffff;
+    color:var(--ocean-deep);
+    font-size:1.15rem;
+    font-weight:700;
+    line-height:1;
+    cursor:pointer;
+    box-shadow:0 2px 6px rgba(46,134,171,0.18);
+  }
+
+  .rail-zoom-btn:hover{
+    background:#eaf6fb;
+  }
+
+  .rail-zoom-btn:focus-visible{
+    outline:3px solid var(--ocean);
+    outline-offset:2px;
+  }
+
+  .rail-map-viewport{
+    overflow:hidden;
+    border-radius:10px;
+    background:#fbfeff;
+    touch-action:none;
+    cursor:grab;
+    aspect-ratio:1300 / 1100;
+    width:100%;
+  }
+
+  .rail-map-viewport.is-dragging{
+    cursor:grabbing;
+  }
+
+  .rail-map-viewport svg{
+    display:block;
+    width:100%;
+    height:100%;
+    transform-origin:0 0;
+    will-change:transform;
+  }
+
+  .info-card svg{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+
+  .info-card svg text{
+    font-family:'Noto Sans TC', sans-serif;
+  }
+
+  .rail-legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:1rem;
+    margin-top:1.1rem;
+    font-size:0.9rem;
+    color:var(--slate);
+  }
+
+  .rail-legend-item{
+    display:inline-flex;
+    align-items:center;
+    gap:0.45rem;
+  }
+
+  .rail-dot{
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    display:inline-block;
+    flex:0 0 auto;
+  }
+
+  .rail-dot-highlight{
+    width:14px;
+    height:14px;
+    background:#ffffff;
+    border:3px solid #f5a623;
+    box-shadow:0 0 0 3px rgba(245,166,35,0.22);
+  }
+
+  .day-schedule{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .schedule-item{
+    display:flex;
+    align-items:baseline;
+    gap:1rem;
+    padding:0.7rem 0;
+    border-bottom:1px solid var(--sky-line);
+  }
+
+  .schedule-item:last-child{
+    border-bottom:none;
+  }
+
+  .schedule-time{
+    flex:0 0 58px;
+    font-family:'Noto Serif TC', serif;
+    font-weight:700;
+    color:var(--ocean-deep);
+    font-size:1rem;
+  }
+
+  .schedule-place{
+    flex:1 1 auto;
+    font-size:1.05rem;
+    color:var(--navy);
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:0.5rem;
+  }
+
+  .map-link{
+    font-size:0.85rem;
+    text-decoration:none;
+    color:var(--ocean-deep);
+    background:#eaf6fb;
+    border:1px solid var(--sky-line);
+    border-radius:999px;
+    padding:0.15rem 0.6rem;
+    display:inline-flex;
+    align-items:center;
+    gap:0.25rem;
+    white-space:nowrap;
+  }
+
+  .map-link:hover{
+    background:#d9edf5;
+  }
+
+  .map-link:focus-visible{
+    outline:3px solid var(--ocean);
+    outline-offset:2px;
+  }
+
+  .map-entry{
+    display:block;
+    flex-basis:100%;
+  }
+
+  .map-preview{
+    position:relative;
+    margin-top:0.6rem;
+    border-radius:10px;
+    overflow:hidden;
+    border:1px solid var(--sky-line);
+  }
+
+  .map-preview-canvas{
+    height:180px;
+    width:100%;
+    background:#eaf6fb;
+  }
+
+  .map-preview-open{
+    position:absolute;
+    top:8px;
+    right:8px;
+    z-index:1000;
+    background:#ffffff;
+    border:1px solid var(--sky-line);
+    border-radius:999px;
+    padding:0.3rem 0.8rem;
+    font-size:0.82rem;
+    font-weight:500;
+    color:var(--ocean-deep);
+    text-decoration:none;
+    box-shadow:0 2px 6px rgba(46,134,171,0.22);
+  }
+
+  .map-preview-open:hover{
+    background:#eaf6fb;
+  }
+
+  .journey-timeline{
+    list-style:none;
+    margin:0;
+    padding:0 0 0 28px;
+    position:relative;
+  }
+
+  .journey-timeline::before{
+    content:"";
+    position:absolute;
+    left:9px;
+    top:10px;
+    bottom:10px;
+    border-left:2px dashed var(--sky-line);
+  }
+
+  .journey-stop{
+    position:relative;
+    margin-bottom:0.7rem;
+  }
+
+  .journey-dot{
+    position:absolute;
+    left:-28px;
+    top:16px;
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:#ffffff;
+    border:3px solid var(--ocean);
+    z-index:1;
+  }
+
+  .journey-dot-flight{
+    border-color:#f5a623;
+    background:#fff8ec;
+  }
+
+  .journey-gap{
+    position:relative;
+    margin:0.15rem 0 0.7rem;
+  }
+
+  .journey-gap-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:0.3rem;
+    background:#eef6fa;
+    border:1px solid var(--sky-line);
+    border-radius:999px;
+    padding:0.2rem 0.7rem;
+    font-size:0.8rem;
+    color:var(--ocean-deep);
+  }
+
+  .journey-card{
+    background:var(--card-bg);
+    border:1px solid var(--sky-line);
+    border-radius:12px;
+    padding:0.9rem 1.1rem;
+    display:flex;
+    align-items:flex-start;
+    gap:0.8rem;
+  }
+
+  .journey-time{
+    flex:0 0 auto;
+    font-family:'Noto Serif TC', serif;
+    font-weight:700;
+    color:var(--ocean-deep);
+    font-size:1rem;
+    min-width:44px;
+  }
+
+  .journey-icon{
+    flex:0 0 auto;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:#eaf6fb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.05rem;
+  }
+
+  .journey-body{
+    flex:1 1 auto;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:0.4rem;
+    min-width:0;
+  }
+
+  .journey-title{
+    margin:0;
+    font-size:1.02rem;
+    color:var(--navy);
+    font-weight:500;
+  }
+
+  .boarding-pass{
+    background:linear-gradient(135deg, var(--ocean-deep), var(--ocean));
+    border:none;
+    color:#ffffff;
+    flex-direction:column;
+    align-items:stretch;
+    gap:0.6rem;
+  }
+
+  .boarding-pass-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:0.85rem;
+    color:#dff3fb;
+  }
+
+  .boarding-pass-flight{
+    background:rgba(255,255,255,0.18);
+    border-radius:6px;
+    padding:0.15rem 0.6rem;
+    font-weight:700;
+    letter-spacing:0.03em;
+  }
+
+  .boarding-pass-route{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:0.6rem;
+  }
+
+  .boarding-pass-city{
+    font-family:'Noto Serif TC', serif;
+    font-weight:700;
+    font-size:1.25rem;
+    line-height:1.35;
+  }
+
+  .boarding-pass-code{
+    font-size:0.78rem;
+    font-weight:400;
+    color:#dff3fb;
+  }
+
+  .boarding-pass-mid{
+    flex:1;
+    text-align:center;
+    font-size:0.78rem;
+    color:#dff3fb;
+  }
+
+  .boarding-pass-mid span{
+    display:block;
+    font-size:1.1rem;
+    margin-bottom:2px;
+  }
+
   @media (prefers-reduced-motion: reduce){
     .day-panel{ transition:none; }
   }
@@ -359,6 +727,8 @@
       margin-left:0.4rem;
       padding-left:0.6rem;
       border-left:1px dashed rgba(255,255,255,0.35);
+      flex-direction:row;
+      gap:0.5rem;
     }
     .main{ padding:2.2rem 1.4rem; }
   }
@@ -370,7 +740,7 @@
 
   <aside class="sidebar">
     <div>
-      <p class="sidebar-title">大阪五日遊行程</p>
+      <p class="sidebar-title">大阪五日遊行程 🌸</p>
       <p class="sidebar-sub">2026/10/7 − 10/11</p>
     </div>
 
@@ -396,6 +766,9 @@
       <button class="nav-btn nav-btn-info" id="tab-info" role="tab" aria-selected="false" aria-controls="panel-info" data-day="info">
         <span class="nav-day">航班／住宿</span><span class="nav-date">Flight &amp; Hotel</span>
       </button>
+      <button class="nav-btn nav-btn-info" id="tab-rail" role="tab" aria-selected="false" aria-controls="panel-rail" data-day="rail">
+        <span class="nav-day">鐵路地圖</span><span class="nav-date">Rail Map</span>
+      </button>
     </div>
   </aside>
 
@@ -404,7 +777,7 @@
     <section class="day-panel active" id="panel-day-1" role="tabpanel" aria-labelledby="tab-day-1" data-day="1">
       <div class="panel-inner">
         <p class="panel-daynum">01</p>
-        <h2 class="panel-title">〈第一天主題標題〉</h2>
+        <h2 class="panel-title">抵達大阪・心齋橋道頓堀之夜</h2>
         <div class="panel-date-row">
           <p class="panel-date">10/7（三）</p>
           <div class="weather-badge is-loading" data-weather-date="2026-10-07">
@@ -412,19 +785,112 @@
             <span class="weather-label">載入中</span>
           </div>
         </div>
-        <p class="panel-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
-        <ul class="panel-highlights">
-          <li>行程亮點 1（待填寫）</li>
-          <li>行程亮點 2（待填寫）</li>
-          <li>行程亮點 3（待填寫）</li>
-        </ul>
+        <ol class="journey-timeline">
+          <li class="journey-stop">
+            <span class="journey-dot journey-dot-flight"></span>
+            <div class="journey-card boarding-pass">
+              <div class="boarding-pass-top">
+                <span>✈ 登機證</span>
+                <span class="boarding-pass-flight">HX618</span>
+              </div>
+              <div class="boarding-pass-route">
+                <div class="boarding-pass-city">香港<div class="boarding-pass-code">10:55 起飛</div></div>
+                <div class="boarding-pass-mid"><span>✈</span>約 5h</div>
+                <div class="boarding-pass-city" style="text-align:right">關西<div class="boarding-pass-code">KIX</div></div>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">✈ 5h30m</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">16:00</span>
+              <span class="journey-icon">🛬</span>
+              <div class="journey-body">
+                <p class="journey-title">抵達關西機場（KIX）</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="關西國際機場 KIX" data-map-lat="34.432" data-map-lng="135.2304" data-map-gurl="https://www.google.com/maps/search/?api=1&query=關西國際機場">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=關西國際機場" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 30m</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">16:30</span>
+              <span class="journey-icon">🚄</span>
+              <div class="journey-body">
+                <p class="journey-title">搭乘 Haruka 特急前往大阪市區</p>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 2h</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">18:30</span>
+              <span class="journey-icon">🛍️</span>
+              <div class="journey-body">
+                <p class="journey-title">心齋橋 + 道頓堀</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="心齋橋" data-map-lat="34.6717" data-map-lng="135.5013" data-map-gurl="https://www.google.com/maps/search/?api=1&query=心齋橋+大阪">📍 心齋橋</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=心齋橋+大阪" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="道頓堀" data-map-lat="34.6687" data-map-lng="135.5013" data-map-gurl="https://www.google.com/maps/search/?api=1&query=道頓堀+大阪">📍 道頓堀</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=道頓堀+大阪" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 1h</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">19:30</span>
+              <span class="journey-icon">🍽️</span>
+              <div class="journey-body">
+                <p class="journey-title">晚餐</p>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 1h30m</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">21:00</span>
+              <span class="journey-icon">🌆</span>
+              <div class="journey-body">
+                <p class="journey-title">道頓堀夜景</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="道頓堀" data-map-lat="34.6687" data-map-lng="135.5013" data-map-gurl="https://www.google.com/maps/search/?api=1&query=道頓堀+大阪">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=道頓堀+大阪" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+        </ol>
       </div>
     </section>
 
     <section class="day-panel" id="panel-day-2" role="tabpanel" aria-labelledby="tab-day-2" data-day="2">
       <div class="panel-inner">
         <p class="panel-daynum">02</p>
-        <h2 class="panel-title">〈第二天主題標題〉</h2>
+        <h2 class="panel-title">難波周邊探索</h2>
         <div class="panel-date-row">
           <p class="panel-date">10/8（四）</p>
           <div class="weather-badge is-loading" data-weather-date="2026-10-08">
@@ -432,19 +898,126 @@
             <span class="weather-label">載入中</span>
           </div>
         </div>
-        <p class="panel-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
-        <ul class="panel-highlights">
-          <li>行程亮點 1（待填寫）</li>
-          <li>行程亮點 2（待填寫）</li>
-          <li>行程亮點 3（待填寫）</li>
-        </ul>
+        <ol class="journey-timeline">
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">10:00</span>
+              <span class="journey-icon">🍳</span>
+              <div class="journey-body">
+                <p class="journey-title">早餐</p>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 30m</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">10:30</span>
+              <span class="journey-icon">🏮</span>
+              <div class="journey-body">
+                <p class="journey-title">黑門市場</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="黑門市場" data-map-lat="34.6653" data-map-lng="135.5065" data-map-gurl="https://www.google.com/maps/search/?api=1&query=黑門市場+大阪">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=黑門市場+大阪" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 1h</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">11:30</span>
+              <span class="journey-icon">🛠️</span>
+              <div class="journey-body">
+                <p class="journey-title">千日前道具屋筋商店街</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="千日前道具屋筋商店街" data-map-lat="34.6647" data-map-lng="135.5024" data-map-gurl="https://www.google.com/maps/search/?api=1&query=千日前道具屋筋商店街+大阪">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=千日前道具屋筋商店街+大阪" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 1h30m</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">13:00</span>
+              <span class="journey-icon">🍽️</span>
+              <div class="journey-body">
+                <p class="journey-title">午餐</p>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 30m</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">13:30</span>
+              <span class="journey-icon">🛍️</span>
+              <div class="journey-body">
+                <p class="journey-title">Namba City</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="Namba City" data-map-lat="34.6634" data-map-lng="135.501" data-map-gurl="https://www.google.com/maps/search/?api=1&query=Namba+City+大阪">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=Namba+City+大阪" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 2h</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">15:30</span>
+              <span class="journey-icon">⛩️</span>
+              <div class="journey-body">
+                <p class="journey-title">難波八阪神社</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="難波八阪神社" data-map-lat="34.6602" data-map-lng="135.4954" data-map-gurl="https://www.google.com/maps/search/?api=1&query=難波八阪神社+大阪">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=難波八阪神社+大阪" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 2h</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">17:30</span>
+              <span class="journey-icon">🛍️</span>
+              <div class="journey-body">
+                <p class="journey-title">Namba Parks</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="Namba Parks" data-map-lat="34.6626" data-map-lng="135.5008" data-map-gurl="https://www.google.com/maps/search/?api=1&query=Namba+Parks+大阪">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=Namba+Parks+大阪" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+        </ol>
       </div>
     </section>
 
     <section class="day-panel" id="panel-day-3" role="tabpanel" aria-labelledby="tab-day-3" data-day="3">
       <div class="panel-inner">
         <p class="panel-daynum">03</p>
-        <h2 class="panel-title">〈第三天主題標題〉</h2>
+        <h2 class="panel-title">通天閣・大阪城・梅田</h2>
         <div class="panel-date-row">
           <p class="panel-date">10/9（五）</p>
           <div class="weather-badge is-loading" data-weather-date="2026-10-09">
@@ -452,19 +1025,129 @@
             <span class="weather-label">載入中</span>
           </div>
         </div>
-        <p class="panel-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
-        <ul class="panel-highlights">
-          <li>行程亮點 1（待填寫）</li>
-          <li>行程亮點 2（待填寫）</li>
-          <li>行程亮點 3（待填寫）</li>
-        </ul>
+        <ol class="journey-timeline">
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">11:00</span>
+              <span class="journey-icon">🗼</span>
+              <div class="journey-body">
+                <p class="journey-title">通天閣 + 新世界</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="通天閣" data-map-lat="34.6524" data-map-lng="135.5063" data-map-gurl="https://www.google.com/maps/search/?api=1&query=通天閣+大阪">📍 通天閣</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=通天閣+大阪" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="新世界" data-map-lat="34.652" data-map-lng="135.506" data-map-gurl="https://www.google.com/maps/search/?api=1&query=新世界+大阪">📍 新世界</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=新世界+大阪" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 2h</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">13:00</span>
+              <span class="journey-icon">🏯</span>
+              <div class="journey-body">
+                <p class="journey-title">大阪城</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="大阪城" data-map-lat="34.6873" data-map-lng="135.5262" data-map-gurl="https://www.google.com/maps/search/?api=1&query=大阪城">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=大阪城" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 2h30m</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">15:30</span>
+              <span class="journey-icon">🏙️</span>
+              <div class="journey-body">
+                <p class="journey-title">梅田</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="梅田" data-map-lat="34.7024" data-map-lng="135.4959" data-map-gurl="https://www.google.com/maps/search/?api=1&query=梅田+大阪">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=梅田+大阪" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 30m</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">16:00</span>
+              <span class="journey-icon">🛍️</span>
+              <div class="journey-body">
+                <p class="journey-title">大丸百貨</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="大丸梅田店" data-map-lat="34.702" data-map-lng="135.4959" data-map-gurl="https://www.google.com/maps/search/?api=1&query=大丸梅田店">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=大丸梅田店" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 1h</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">17:00</span>
+              <span class="journey-icon">🎡</span>
+              <div class="journey-body">
+                <p class="journey-title">HEP FIVE</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="HEP FIVE" data-map-lat="34.7038" data-map-lng="135.5013" data-map-gurl="https://www.google.com/maps/search/?api=1&query=HEP+FIVE+大阪">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=HEP+FIVE+大阪" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 2h</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">19:00</span>
+              <span class="journey-icon">🛍️</span>
+              <div class="journey-body">
+                <p class="journey-title">心齋橋</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="心齋橋" data-map-lat="34.6717" data-map-lng="135.5013" data-map-gurl="https://www.google.com/maps/search/?api=1&query=心齋橋+大阪">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=心齋橋+大阪" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+        </ol>
       </div>
     </section>
 
     <section class="day-panel" id="panel-day-4" role="tabpanel" aria-labelledby="tab-day-4" data-day="4">
       <div class="panel-inner">
         <p class="panel-daynum">04</p>
-        <h2 class="panel-title">〈第四天主題標題〉</h2>
+        <h2 class="panel-title">嵐山京都一日遊</h2>
         <div class="panel-date-row">
           <p class="panel-date">10/10（六）</p>
           <div class="weather-badge is-loading" data-weather-date="2026-10-10">
@@ -472,19 +1155,108 @@
             <span class="weather-label">載入中</span>
           </div>
         </div>
-        <p class="panel-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
-        <ul class="panel-highlights">
-          <li>行程亮點 1（待填寫）</li>
-          <li>行程亮點 2（待填寫）</li>
-          <li>行程亮點 3（待填寫）</li>
-        </ul>
+        <ol class="journey-timeline">
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">08:00</span>
+              <span class="journey-icon">🚌</span>
+              <div class="journey-body">
+                <p class="journey-title">集合出發（一日團，約 08:00–18:00）</p>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 1h</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">09:00</span>
+              <span class="journey-icon">🙏</span>
+              <div class="journey-body">
+                <p class="journey-title">勝尾寺</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="勝尾寺" data-map-lat="34.8494" data-map-lng="135.4813" data-map-gurl="https://www.google.com/maps/search/?api=1&query=勝尾寺">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=勝尾寺" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 30m</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">09:30</span>
+              <span class="journey-icon">🗺️</span>
+              <div class="journey-body">
+                <p class="journey-title">關西遊</p>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 30m</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">10:00</span>
+              <span class="journey-icon">🎋</span>
+              <div class="journey-body">
+                <p class="journey-title">嵐山竹林</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="嵐山竹林小徑" data-map-lat="35.017" data-map-lng="135.672" data-map-gurl="https://www.google.com/maps/search/?api=1&query=嵐山竹林小徑">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=嵐山竹林小徑" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 8h</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">18:00</span>
+              <span class="journey-icon">🚌</span>
+              <div class="journey-body">
+                <p class="journey-title">一日團解散（心齋橋）</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="心齋橋" data-map-lat="34.6717" data-map-lng="135.5013" data-map-gurl="https://www.google.com/maps/search/?api=1&query=心齋橋+大阪">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=心齋橋+大阪" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 1h</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">19:00</span>
+              <span class="journey-icon">🛍️</span>
+              <div class="journey-body">
+                <p class="journey-title">心齋橋</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="心齋橋" data-map-lat="34.6717" data-map-lng="135.5013" data-map-gurl="https://www.google.com/maps/search/?api=1&query=心齋橋+大阪">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=心齋橋+大阪" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+        </ol>
       </div>
     </section>
 
     <section class="day-panel" id="panel-day-5" role="tabpanel" aria-labelledby="tab-day-5" data-day="5">
       <div class="panel-inner">
         <p class="panel-daynum">05</p>
-        <h2 class="panel-title">〈第五天主題標題〉</h2>
+        <h2 class="panel-title">退房・Outlet・返程</h2>
         <div class="panel-date-row">
           <p class="panel-date">10/11（日）</p>
           <div class="weather-badge is-loading" data-weather-date="2026-10-11">
@@ -492,12 +1264,73 @@
             <span class="weather-label">載入中</span>
           </div>
         </div>
-        <p class="panel-intro">在此填寫本日行程重點、景點與交通安排的簡短介紹文字。</p>
-        <ul class="panel-highlights">
-          <li>行程亮點 1（待填寫）</li>
-          <li>行程亮點 2（待填寫）</li>
-          <li>行程亮點 3（待填寫）</li>
-        </ul>
+        <ol class="journey-timeline">
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">10:00</span>
+              <span class="journey-icon">🧳</span>
+              <div class="journey-body">
+                <p class="journey-title">飯店 Check out</p>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 1h</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">11:00</span>
+              <span class="journey-icon">☕</span>
+              <div class="journey-body">
+                <p class="journey-title">Cafe</p>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 1h30m</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">12:30</span>
+              <span class="journey-icon">🛍️</span>
+              <div class="journey-body">
+                <p class="journey-title">Outlet 購物</p>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 7h30m</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot journey-dot-flight"></span>
+            <div class="journey-card boarding-pass">
+              <div class="boarding-pass-top">
+                <span>✈ 登機證</span>
+                <span class="boarding-pass-flight">HX613</span>
+              </div>
+              <div class="boarding-pass-route">
+                <div class="boarding-pass-city">關西<div class="boarding-pass-code">20:20 起飛</div></div>
+                <div class="boarding-pass-mid"><span>✈</span>約 3h30m</div>
+                <div class="boarding-pass-city" style="text-align:right">香港<div class="boarding-pass-code">HKG</div></div>
+              </div>
+            </div>
+          </li>
+          <li class="journey-gap"><span class="journey-gap-badge">✈ 3h30m</span></li>
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">23:30</span>
+              <span class="journey-icon">🛬</span>
+              <div class="journey-body">
+                <p class="journey-title">HX613 抵達香港（23:50）</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="香港國際機場 HKG" data-map-lat="22.308" data-map-lng="113.9185" data-map-gurl="https://www.google.com/maps/search/?api=1&query=香港國際機場">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=香港國際機場" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+              </div>
+            </div>
+          </li>
+        </ol>
       </div>
     </section>
 
@@ -515,10 +1348,10 @@
           <p class="info-card-label">去程</p>
           <dl class="info-grid">
             <div><dt>日期</dt><dd>10/7（三）</dd></div>
-            <div><dt>航班編號</dt><dd>〈待填寫〉</dd></div>
-            <div><dt>起飛時間</dt><dd>〈待填寫〉</dd></div>
-            <div><dt>抵達時間</dt><dd>〈待填寫〉</dd></div>
-            <div><dt>機場</dt><dd>〈待填寫〉</dd></div>
+            <div><dt>航班編號</dt><dd>HX618</dd></div>
+            <div><dt>起飛時間</dt><dd>10:55（香港 HKG）</dd></div>
+            <div><dt>抵達時間</dt><dd>16:00（關西 KIX）</dd></div>
+            <div><dt>機場</dt><dd>香港 → 關西</dd></div>
           </dl>
         </div>
 
@@ -526,10 +1359,10 @@
           <p class="info-card-label">回程</p>
           <dl class="info-grid">
             <div><dt>日期</dt><dd>10/11（日）</dd></div>
-            <div><dt>航班編號</dt><dd>〈待填寫〉</dd></div>
-            <div><dt>起飛時間</dt><dd>〈待填寫〉</dd></div>
-            <div><dt>抵達時間</dt><dd>〈待填寫〉</dd></div>
-            <div><dt>機場</dt><dd>〈待填寫〉</dd></div>
+            <div><dt>航班編號</dt><dd>HX613</dd></div>
+            <div><dt>起飛時間</dt><dd>20:20（關西 KIX）</dd></div>
+            <div><dt>抵達時間</dt><dd>23:50（香港 HKG）</dd></div>
+            <div><dt>機場</dt><dd>關西 → 香港</dd></div>
           </dl>
         </div>
 
@@ -547,6 +1380,146 @@
             <div><dt>退房日期</dt><dd>10/11（日）</dd></div>
             <div><dt>訂房編號</dt><dd>〈待填寫〉</dd></div>
           </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="day-panel" id="panel-rail" role="tabpanel" aria-labelledby="tab-rail" data-day="rail">
+      <div class="panel-inner panel-inner-wide">
+        <h2 class="panel-title">關西鐵路路網示意圖</h2>
+        <p class="panel-intro">盡量涵蓋大阪、京都、神戶、奈良、和歌山、關西機場之間嘅主要鐵路走線（簡化示意，非依實際比例、非官方地圖）。大阪市中心地鐵詳圖放喺虛線框內，特別標示「心齋橋」與「長堀橋」兩個轉乘站。畫面可以用右上角按鈕、滑鼠滾輪或手指縮放，亦都可以拖曳平移。</p>
+
+        <div class="info-card">
+          <div class="rail-map-wrap">
+            <div class="rail-map-controls">
+              <button type="button" class="rail-zoom-btn" data-zoom="in" aria-label="放大">＋</button>
+              <button type="button" class="rail-zoom-btn" data-zoom="out" aria-label="縮小">－</button>
+              <button type="button" class="rail-zoom-btn" data-zoom="reset" aria-label="重設檢視">⟲</button>
+            </div>
+            <div class="rail-map-viewport" id="railViewport">
+              <svg id="railMapSvg" viewBox="0 0 1300 1100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="關西地區鐵路路網示意圖，涵蓋大阪、京都、神戶、奈良、和歌山、關西機場，並標示心齋橋與長堀橋轉乘站位置">
+
+                <!-- ===== 區域幹線 ===== -->
+
+                <!-- 往神戶 -->
+                <polyline points="550,220 250,270 110,300" fill="none" stroke="#e8792c" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                <circle cx="250" cy="270" r="6" fill="#ffffff" stroke="#e8792c" stroke-width="3"></circle>
+                <text x="250" y="252" text-anchor="middle" font-size="12" fill="#4a6572">尼崎</text>
+                <circle cx="110" cy="300" r="11" fill="#123c55" stroke="#ffffff" stroke-width="3"></circle>
+                <text x="110" y="278" text-anchor="middle" font-size="17" font-weight="700" fill="#123c55">神戶</text>
+                <text x="180" y="335" text-anchor="middle" font-size="13" fill="#2c4a63">JR／阪急／阪神</text>
+
+                <!-- 往寶塚 -->
+                <line x1="550" y1="220" x2="330" y2="70" stroke="#c99a2e" stroke-width="7" stroke-linecap="round"></line>
+                <circle cx="330" cy="70" r="11" fill="#123c55" stroke="#ffffff" stroke-width="3"></circle>
+                <text x="330" y="50" text-anchor="middle" font-size="17" font-weight="700" fill="#123c55">寶塚</text>
+                <text x="430" y="130" text-anchor="middle" font-size="13" fill="#2c4a63">阪急寶塚線</text>
+
+                <!-- 往京都 -->
+                <polyline points="550,220 660,150 1080,90" fill="none" stroke="#b0468c" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                <circle cx="660" cy="150" r="6" fill="#ffffff" stroke="#b0468c" stroke-width="3"></circle>
+                <text x="660" y="132" text-anchor="middle" font-size="12" fill="#4a6572">新大阪</text>
+                <circle cx="1080" cy="90" r="11" fill="#123c55" stroke="#ffffff" stroke-width="3"></circle>
+                <text x="1080" y="68" text-anchor="middle" font-size="17" font-weight="700" fill="#123c55">京都</text>
+                <text x="870" y="105" text-anchor="middle" font-size="13" fill="#2c4a63">JR／阪急／京阪</text>
+
+                <!-- 往奈良 -->
+                <polyline points="550,590 960,610 1150,650" fill="none" stroke="#2c4a7c" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                <circle cx="960" cy="610" r="6" fill="#ffffff" stroke="#2c4a7c" stroke-width="3"></circle>
+                <text x="960" y="630" text-anchor="middle" font-size="12" fill="#4a6572">鶴橋</text>
+                <circle cx="1150" cy="650" r="11" fill="#123c55" stroke="#ffffff" stroke-width="3"></circle>
+                <text x="1150" y="628" text-anchor="middle" font-size="17" font-weight="700" fill="#123c55">奈良</text>
+                <text x="1010" y="670" text-anchor="middle" font-size="13" fill="#2c4a63">近鐵／JR</text>
+
+                <!-- 往關西機場・和歌山 -->
+                <polyline points="550,670 650,850" fill="none" stroke="#1e8a7a" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                <circle cx="650" cy="850" r="6" fill="#ffffff" stroke="#1e8a7a" stroke-width="3"></circle>
+                <text x="668" y="855" text-anchor="start" font-size="12" fill="#4a6572">日根野</text>
+                <line x1="650" y1="850" x2="600" y2="950" stroke="#1e8a7a" stroke-width="8" stroke-linecap="round"></line>
+                <circle cx="600" cy="950" r="11" fill="#123c55" stroke="#ffffff" stroke-width="3"></circle>
+                <text x="600" y="978" text-anchor="middle" font-size="16" font-weight="700" fill="#123c55">關西機場</text>
+                <line x1="650" y1="850" x2="780" y2="1010" stroke="#1e8a7a" stroke-width="8" stroke-linecap="round"></line>
+                <circle cx="780" cy="1010" r="11" fill="#123c55" stroke="#ffffff" stroke-width="3"></circle>
+                <text x="780" y="1038" text-anchor="middle" font-size="16" font-weight="700" fill="#123c55">和歌山</text>
+                <text x="500" y="770" text-anchor="middle" font-size="13" fill="#2c4a63">南海／JR阪和線</text>
+
+                <!-- ===== 大阪市中心地鐵詳圖（放大可查看站名） ===== -->
+                <rect x="285" y="180" width="645" height="480" rx="18" fill="none" stroke="#8fc1d6" stroke-width="2" stroke-dasharray="6 6"></rect>
+                <text x="298" y="202" text-anchor="start" font-size="16" font-weight="700" fill="#123c55">大阪市中心</text>
+                <text x="912" y="648" text-anchor="end" font-size="12" font-style="italic" fill="#1f6d8c">🔍 放大查看站名</text>
+
+                <g transform="translate(250,150)">
+
+                  <!-- 路線 -->
+                  <line x1="80" y1="360" x2="630" y2="360" stroke="#6fb92c" stroke-width="7" stroke-linecap="round"></line>
+                  <line x1="300" y1="70" x2="300" y2="520" stroke="#d7263d" stroke-width="7" stroke-linecap="round"></line>
+                  <line x1="410" y1="260" x2="410" y2="460" stroke="#8a6240" stroke-width="7" stroke-linecap="round"></line>
+
+                  <!-- 長堀鶴見緑地線（綠線）一般車站 -->
+                  <circle cx="80" cy="360" r="8" fill="#ffffff" stroke="#6fb92c" stroke-width="4"></circle>
+                  <text x="80" y="342" text-anchor="middle" font-size="14" fill="#4a6572">西長堀</text>
+
+                  <circle cx="190" cy="360" r="8" fill="#ffffff" stroke="#6fb92c" stroke-width="4"></circle>
+                  <text x="190" y="342" text-anchor="middle" font-size="14" fill="#4a6572">西大橋</text>
+
+                  <circle cx="520" cy="360" r="8" fill="#ffffff" stroke="#6fb92c" stroke-width="4"></circle>
+                  <text x="520" y="342" text-anchor="middle" font-size="14" fill="#4a6572">松屋町</text>
+
+                  <circle cx="630" cy="360" r="8" fill="#ffffff" stroke="#6fb92c" stroke-width="4"></circle>
+                  <text x="630" y="342" text-anchor="middle" font-size="14" fill="#4a6572">谷町六丁目</text>
+
+                  <!-- 御堂筋線（紅線）一般車站 -->
+                  <circle cx="300" cy="70" r="8" fill="#ffffff" stroke="#d7263d" stroke-width="4"></circle>
+                  <text x="316" y="75" text-anchor="start" font-size="14" fill="#4a6572">梅田</text>
+
+                  <circle cx="300" cy="150" r="8" fill="#ffffff" stroke="#d7263d" stroke-width="4"></circle>
+                  <text x="316" y="155" text-anchor="start" font-size="14" fill="#4a6572">淀屋橋</text>
+
+                  <circle cx="300" cy="240" r="8" fill="#ffffff" stroke="#d7263d" stroke-width="4"></circle>
+                  <text x="316" y="245" text-anchor="start" font-size="14" fill="#4a6572">本町</text>
+
+                  <circle cx="300" cy="440" r="8" fill="#ffffff" stroke="#d7263d" stroke-width="4"></circle>
+                  <text x="316" y="445" text-anchor="start" font-size="14" fill="#4a6572">難波</text>
+
+                  <circle cx="300" cy="520" r="8" fill="#ffffff" stroke="#d7263d" stroke-width="4"></circle>
+                  <text x="316" y="525" text-anchor="start" font-size="14" fill="#4a6572">天王寺</text>
+
+                  <!-- 堺筋線（棕線）一般車站 -->
+                  <circle cx="410" cy="260" r="8" fill="#ffffff" stroke="#8a6240" stroke-width="4"></circle>
+                  <text x="426" y="265" text-anchor="start" font-size="14" fill="#4a6572">堺筋本町</text>
+
+                  <circle cx="410" cy="460" r="8" fill="#ffffff" stroke="#8a6240" stroke-width="4"></circle>
+                  <text x="426" y="465" text-anchor="start" font-size="14" fill="#4a6572">日本橋</text>
+
+                  <!-- 心齋橋（御堂筋線 × 長堀鶴見緑地線）highlight -->
+                  <circle cx="300" cy="360" r="20" fill="#f5a623" opacity="0.25"></circle>
+                  <circle cx="300" cy="360" r="12" fill="#ffffff" stroke="#f5a623" stroke-width="4"></circle>
+                  <rect x="261" y="378" width="78" height="26" rx="13" fill="#fff8ec" stroke="#f5a623" stroke-width="1.5"></rect>
+                  <text x="300" y="396" text-anchor="middle" font-size="15" font-weight="700" fill="#8a4b12">心齋橋</text>
+
+                  <!-- 長堀橋（堺筋線 × 長堀鶴見緑地線）highlight -->
+                  <circle cx="410" cy="360" r="20" fill="#f5a623" opacity="0.25"></circle>
+                  <circle cx="410" cy="360" r="12" fill="#ffffff" stroke="#f5a623" stroke-width="4"></circle>
+                  <rect x="371" y="378" width="78" height="26" rx="13" fill="#fff8ec" stroke="#f5a623" stroke-width="1.5"></rect>
+                  <text x="410" y="396" text-anchor="middle" font-size="15" font-weight="700" fill="#8a4b12">長堀橋</text>
+
+                </g>
+
+              </svg>
+            </div>
+          </div>
+
+          <div class="rail-legend">
+            <span class="rail-legend-item"><span class="rail-dot" style="background:#d7263d"></span>御堂筋線</span>
+            <span class="rail-legend-item"><span class="rail-dot" style="background:#6fb92c"></span>長堀鶴見緑地線</span>
+            <span class="rail-legend-item"><span class="rail-dot" style="background:#8a6240"></span>堺筋線</span>
+            <span class="rail-legend-item"><span class="rail-dot" style="background:#e8792c"></span>JR／阪急／阪神（神戶）</span>
+            <span class="rail-legend-item"><span class="rail-dot" style="background:#c99a2e"></span>阪急寶塚線</span>
+            <span class="rail-legend-item"><span class="rail-dot" style="background:#b0468c"></span>JR／阪急／京阪（京都）</span>
+            <span class="rail-legend-item"><span class="rail-dot" style="background:#2c4a7c"></span>近鐵／JR（奈良）</span>
+            <span class="rail-legend-item"><span class="rail-dot" style="background:#1e8a7a"></span>南海／JR阪和線（機場・和歌山）</span>
+            <span class="rail-legend-item"><span class="rail-dot rail-dot-highlight"></span>重點轉乘站</span>
+          </div>
         </div>
       </div>
     </section>
@@ -694,6 +1667,129 @@
 
   fetchOsakaWeather();
   setInterval(fetchOsakaWeather, WEATHER_REFRESH_MS);
+
+  /* ---------- 鐵路地圖：縮放與拖曳 ---------- */
+  (function(){
+    var viewport = document.getElementById('railViewport');
+    var svg = document.getElementById('railMapSvg');
+    if (!viewport || !svg) return;
+
+    var scale = 1, tx = 0, ty = 0;
+    var MIN_SCALE = 1, MAX_SCALE = 4;
+
+    function applyTransform(){
+      svg.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
+    }
+
+    function clampPan(){
+      if (scale <= 1){ tx = 0; ty = 0; return; }
+      var rect = viewport.getBoundingClientRect();
+      var minX = rect.width * (1 - scale);
+      var minY = rect.height * (1 - scale);
+      if (tx > 0) tx = 0;
+      if (tx < minX) tx = minX;
+      if (ty > 0) ty = 0;
+      if (ty < minY) ty = minY;
+    }
+
+    function setScale(newScale, anchorX, anchorY){
+      newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, newScale));
+      if (anchorX === undefined || anchorY === undefined){
+        var r = viewport.getBoundingClientRect();
+        anchorX = r.width / 2;
+        anchorY = r.height / 2;
+      }
+      var ratio = newScale / scale;
+      tx = anchorX - (anchorX - tx) * ratio;
+      ty = anchorY - (anchorY - ty) * ratio;
+      scale = newScale;
+      clampPan();
+      applyTransform();
+    }
+
+    document.querySelectorAll('.rail-zoom-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var action = btn.dataset.zoom;
+        if (action === 'in') setScale(scale + 0.6);
+        else if (action === 'out') setScale(scale - 0.6);
+        else { scale = 1; tx = 0; ty = 0; applyTransform(); }
+      });
+    });
+
+    viewport.addEventListener('wheel', function(e){
+      e.preventDefault();
+      var rect = viewport.getBoundingClientRect();
+      var anchorX = e.clientX - rect.left;
+      var anchorY = e.clientY - rect.top;
+      var delta = e.deltaY > 0 ? -0.3 : 0.3;
+      setScale(scale + delta, anchorX, anchorY);
+    }, { passive: false });
+
+    var dragging = false, lastX = 0, lastY = 0;
+
+    viewport.addEventListener('pointerdown', function(e){
+      dragging = true;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      viewport.classList.add('is-dragging');
+      viewport.setPointerCapture(e.pointerId);
+    });
+
+    viewport.addEventListener('pointermove', function(e){
+      if (!dragging) return;
+      tx += (e.clientX - lastX);
+      ty += (e.clientY - lastY);
+      lastX = e.clientX;
+      lastY = e.clientY;
+      clampPan();
+      applyTransform();
+    });
+
+    function endDrag(){
+      dragging = false;
+      viewport.classList.remove('is-dragging');
+    }
+    viewport.addEventListener('pointerup', endDrag);
+    viewport.addEventListener('pointercancel', endDrag);
+    viewport.addEventListener('pointerleave', endDrag);
+  })();
+
+  /* ---------- 地圖預覽（Leaflet + OpenStreetMap，免金鑰） ---------- */
+  (function(){
+    if (typeof L === 'undefined') return;
+    var mapInstances = {};
+
+    document.querySelectorAll('.map-link').forEach(function(btn, idx){
+      var wrap = btn.closest('.map-entry');
+      var preview = wrap ? wrap.querySelector('.map-preview') : null;
+      if (!preview) return;
+      var canvas = preview.querySelector('.map-preview-canvas');
+      var uid = 'mapPreview' + idx;
+      canvas.id = uid;
+
+      btn.addEventListener('click', function(){
+        var willShow = preview.hidden;
+        preview.hidden = !willShow;
+
+        if (!preview.hidden){
+          if (!mapInstances[uid]){
+            var lat = parseFloat(btn.dataset.mapLat);
+            var lng = parseFloat(btn.dataset.mapLng);
+            var name = btn.dataset.mapName;
+            var map = L.map(uid, { scrollWheelZoom: false }).setView([lat, lng], 16);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              maxZoom: 19,
+              attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+            L.marker([lat, lng]).addTo(map).bindPopup(name).openPopup();
+            mapInstances[uid] = map;
+          } else {
+            window.setTimeout(function(){ mapInstances[uid].invalidateSize(); }, 60);
+          }
+        }
+      });
+    });
+  })();
 </script>
 
 </body>
