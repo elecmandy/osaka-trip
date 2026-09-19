@@ -564,6 +564,65 @@
     background:#eaf6fb;
   }
 
+  .journey-photo-wrap{
+    display:block;
+    flex-basis:100%;
+    margin-top:0.5rem;
+  }
+
+  .journey-photo{
+    display:block;
+    width:100%;
+    max-width:220px;
+    aspect-ratio:4 / 5;
+    object-fit:cover;
+    border-radius:14px;
+    border:1px solid var(--sky-line);
+  }
+
+  .journey-photo-credit{
+    display:block;
+    font-size:0.68rem;
+    color:#9db3bf;
+    margin-top:0.25rem;
+  }
+
+  .tour-banner{
+    background:linear-gradient(135deg, var(--ocean-deep), var(--ocean));
+    color:#ffffff;
+    border-radius:12px;
+    padding:1rem 1.2rem;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:0.7rem;
+    margin-bottom:1.2rem;
+  }
+
+  .tour-banner-title{
+    margin:0;
+    font-family:'Noto Serif TC', serif;
+    font-weight:700;
+    font-size:1.05rem;
+  }
+
+  .tour-banner-link{
+    background:rgba(255,255,255,0.18);
+    border:1px solid rgba(255,255,255,0.4);
+    border-radius:999px;
+    padding:0.4rem 1rem;
+    color:#ffffff;
+    text-decoration:none;
+    font-size:0.9rem;
+    font-weight:500;
+    white-space:nowrap;
+  }
+
+  .tour-banner-link:hover{
+    background:rgba(255,255,255,0.3);
+  }
+
   .journey-timeline{
     list-style:none;
     margin:0;
@@ -1194,7 +1253,7 @@
     <section class="day-panel" id="panel-day-4" role="tabpanel" aria-labelledby="tab-day-4" data-day="4">
       <div class="panel-inner">
         <p class="panel-daynum">04</p>
-        <h2 class="panel-title">嵐山京都一日遊<span class="en">Arashiyama &amp; Kyoto Day Tour</span></h2>
+        <h2 class="panel-title">京都一日團：勝尾寺・嵐山・清水寺<span class="en">Kyoto Day Tour: Katsuo-ji, Arashiyama &amp; Kiyomizu-dera</span></h2>
         <div class="panel-date-row">
           <p class="panel-date">10/10（六）</p>
           <div class="weather-badge is-loading" data-weather-date="2026-10-10">
@@ -1202,18 +1261,35 @@
             <span class="weather-label">載入中</span>
           </div>
         </div>
+
+        <div class="tour-banner">
+          <p class="tour-banner-title">一日團行程 08:00–18:30<span class="en">Day Tour 08:00–18:30</span></p>
+          <a class="tour-banner-link" href="https://hk.trip.com/things-to-do/detail/93075124?locale=zh-HK&curr=HKD" target="_blank" rel="noopener noreferrer">Learn More ↗</a>
+        </div>
+
         <ol class="journey-timeline">
+
           <li class="journey-stop">
             <span class="journey-dot"></span>
             <div class="journey-card">
               <span class="journey-time">08:00</span>
               <span class="journey-icon">🚌</span>
               <div class="journey-body">
-                <p class="journey-title">集合出發（一日團，約 08:00–18:00）<span class="en">Meet &amp; depart (day tour, approx. 08:00–18:00)</span></p>
+                <p class="journey-title">於 VIP Villa Namba 難波集合<span class="en">Meet at VIP Villa Namba, Osaka</span></p>
+                <p style="width:100%;margin:0;font-size:0.85rem;color:var(--slate);">大阪府大阪市浪速區難波中1丁目2-1</p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="VIP Villa Namba" data-map-lat="34.6595" data-map-lng="135.5010" data-map-gurl="https://www.google.com/maps/search/?api=1&query=VIP+Villa+Namba+Osaka">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=VIP+Villa+Namba+Osaka" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
               </div>
             </div>
           </li>
+
           <li class="journey-gap"><span class="journey-gap-badge">🕐 1h</span></li>
+
           <li class="journey-stop">
             <span class="journey-dot"></span>
             <div class="journey-card">
@@ -1228,74 +1304,155 @@
                 <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=勝尾寺" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
               </div>
             </span>
+                <span class="journey-photo-wrap">
+                  <img class="journey-photo" src="https://commons.wikimedia.org/wiki/Special:FilePath/%E5%8B%9D%E5%B0%BE%E5%AF%BA%E5%B1%B1%E9%96%80.jpg?width=400" alt="勝尾寺山門 Katsuo-ji Sanmon gate" loading="lazy">
+                  <span class="journey-photo-credit">Photo: Wikimedia Commons</span>
+                </span>
+
               </div>
             </div>
           </li>
-          <li class="journey-gap"><span class="journey-gap-badge">🕐 30m</span></li>
+
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 3h30m</span></li>
+
           <li class="journey-stop">
             <span class="journey-dot"></span>
             <div class="journey-card">
-              <span class="journey-time">09:30</span>
-              <span class="journey-icon">🗺️</span>
-              <div class="journey-body">
-                <p class="journey-title">關西遊<span class="en">Kansai sightseeing</span></p>
-              </div>
-            </div>
-          </li>
-          <li class="journey-gap"><span class="journey-gap-badge">🕐 30m</span></li>
-          <li class="journey-stop">
-            <span class="journey-dot"></span>
-            <div class="journey-card">
-              <span class="journey-time">10:00</span>
+              <span class="journey-time">12:30</span>
               <span class="journey-icon">🎋</span>
               <div class="journey-body">
-                <p class="journey-title">嵐山竹林<span class="en">Arashiyama Bamboo Grove</span></p>
+                <p class="journey-title">嵐山 + 午餐<span class="en">Arashiyama + Lunch</span></p>
                 <span class="map-entry">
-              <button type="button" class="map-link" data-map-name="嵐山竹林小徑" data-map-lat="35.017" data-map-lng="135.672" data-map-gurl="https://www.google.com/maps/search/?api=1&query=嵐山竹林小徑">📍 地圖</button>
+              <button type="button" class="map-link" data-map-name="嵐山" data-map-lat="35.0094" data-map-lng="135.6683" data-map-gurl="https://www.google.com/maps/search/?api=1&query=嵐山+Arashiyama+Kyoto">📍 地圖</button>
               <div class="map-preview" hidden>
                 <div class="map-preview-canvas"></div>
-                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=嵐山竹林小徑" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=嵐山+Arashiyama+Kyoto" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+                <span class="journey-photo-wrap">
+                  <img class="journey-photo" src="https://commons.wikimedia.org/wiki/Special:FilePath/Bamboo%20Forest%2C%20Arashiyama%2C%20Kyoto%2C%20Japan.jpg?width=400" alt="嵐山竹林 Arashiyama Bamboo Grove" loading="lazy">
+                  <span class="journey-photo-credit">Photo: Wikimedia Commons</span>
+                </span>
+
+              </div>
+            </div>
+          </li>
+
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 1h</span></li>
+
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">13:30</span>
+              <span class="journey-icon">⛩️</span>
+              <div class="journey-body">
+                <p class="journey-title">天龍寺<span class="en">Tenryu-ji Temple</span></p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="天龍寺" data-map-lat="35.0159" data-map-lng="135.6738" data-map-gurl="https://www.google.com/maps/search/?api=1&query=天龍寺+Tenryuji+Kyoto">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=天龍寺+Tenryuji+Kyoto" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+                <span class="journey-photo-wrap">
+                  <img class="journey-photo" src="https://commons.wikimedia.org/wiki/Special:FilePath/Tenryuji-sogenchi.jpg?width=400" alt="天龍寺曹源池庭園 Tenryu-ji Sogenchi Garden" loading="lazy">
+                  <span class="journey-photo-credit">Photo: Wikimedia Commons</span>
+                </span>
+
+              </div>
+            </div>
+          </li>
+
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 1h30m</span></li>
+
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">15:00</span>
+              <span class="journey-icon">🛕</span>
+              <div class="journey-body">
+                <p class="journey-title">清水寺<span class="en">Kiyomizu-dera Temple</span></p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="清水寺" data-map-lat="34.9949" data-map-lng="135.7850" data-map-gurl="https://www.google.com/maps/search/?api=1&query=清水寺+Kiyomizudera+Kyoto">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=清水寺+Kiyomizudera+Kyoto" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+                <span class="journey-photo-wrap">
+                  <img class="journey-photo" src="https://commons.wikimedia.org/wiki/Special:FilePath/Kiyomizu-dera%2C%20Kyoto%2C%20November%202016%20-01.jpg?width=400" alt="清水寺 Kiyomizu-dera main hall" loading="lazy">
+                  <span class="journey-photo-credit">Photo: Wikimedia Commons</span>
+                </span>
+
+              </div>
+            </div>
+          </li>
+
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 1h30m</span></li>
+
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">16:30</span>
+              <span class="journey-icon">🏮</span>
+              <div class="journey-body">
+                <p class="journey-title">三年坂<span class="en">Sannenzaka Slope</span></p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="三年坂" data-map-lat="34.9969" data-map-lng="135.7817" data-map-gurl="https://www.google.com/maps/search/?api=1&query=三年坂+Sannenzaka+Kyoto">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=三年坂+Sannenzaka+Kyoto" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
               </div>
             </span>
               </div>
             </div>
           </li>
-          <li class="journey-gap"><span class="journey-gap-badge">🕐 8h</span></li>
+
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 30m</span></li>
+
           <li class="journey-stop">
             <span class="journey-dot"></span>
             <div class="journey-card">
-              <span class="journey-time">18:00</span>
+              <span class="journey-time">17:00</span>
+              <span class="journey-icon">🎎</span>
+              <div class="journey-body">
+                <p class="journey-title">祇園<span class="en">Gion District</span></p>
+                <span class="map-entry">
+              <button type="button" class="map-link" data-map-name="祇園" data-map-lat="35.0037" data-map-lng="135.7750" data-map-gurl="https://www.google.com/maps/search/?api=1&query=祇園+Gion+Kyoto">📍 地圖</button>
+              <div class="map-preview" hidden>
+                <div class="map-preview-canvas"></div>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=祇園+Gion+Kyoto" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+              </div>
+            </span>
+                <span class="journey-photo-wrap">
+                  <img class="journey-photo" src="https://commons.wikimedia.org/wiki/Special:FilePath/Hanamikoji-dori.jpg?width=400" alt="祇園花見小路 Gion Hanamikoji-dori" loading="lazy">
+                  <span class="journey-photo-credit">Photo: Wikimedia Commons</span>
+                </span>
+
+              </div>
+            </div>
+          </li>
+
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 1h30m</span></li>
+
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">18:30</span>
               <span class="journey-icon">🚌</span>
               <div class="journey-body">
-                <p class="journey-title">一日團解散（心齋橋）<span class="en">Day tour ends (Shinsaibashi)</span></p>
+                <p class="journey-title">難波 解散<span class="en">Tour ends at Namba</span></p>
                 <span class="map-entry">
-              <button type="button" class="map-link" data-map-name="心齋橋" data-map-lat="34.6717" data-map-lng="135.5013" data-map-gurl="https://www.google.com/maps/search/?api=1&query=心齋橋+大阪">📍 地圖</button>
+              <button type="button" class="map-link" data-map-name="難波" data-map-lat="34.6634" data-map-lng="135.5010" data-map-gurl="https://www.google.com/maps/search/?api=1&query=難波+大阪">📍 地圖</button>
               <div class="map-preview" hidden>
                 <div class="map-preview-canvas"></div>
-                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=心齋橋+大阪" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
+                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=難波+大阪" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
               </div>
             </span>
               </div>
             </div>
           </li>
-          <li class="journey-gap"><span class="journey-gap-badge">🕐 1h</span></li>
-          <li class="journey-stop">
-            <span class="journey-dot"></span>
-            <div class="journey-card">
-              <span class="journey-time">19:00</span>
-              <span class="journey-icon">🛍️</span>
-              <div class="journey-body">
-                <p class="journey-title">心齋橋<span class="en">Shinsaibashi</span></p>
-                <span class="map-entry">
-              <button type="button" class="map-link" data-map-name="心齋橋" data-map-lat="34.6717" data-map-lng="135.5013" data-map-gurl="https://www.google.com/maps/search/?api=1&query=心齋橋+大阪">📍 地圖</button>
-              <div class="map-preview" hidden>
-                <div class="map-preview-canvas"></div>
-                <a class="map-preview-open" href="https://www.google.com/maps/search/?api=1&query=心齋橋+大阪" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
-              </div>
-            </span>
-              </div>
-            </div>
-          </li>
+
         </ol>
       </div>
     </section>
