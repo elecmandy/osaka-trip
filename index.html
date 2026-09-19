@@ -1115,17 +1115,6 @@
           <li class="journey-stop">
             <span class="journey-dot"></span>
             <div class="journey-card">
-              <span class="journey-time">10:00</span>
-              <span class="journey-icon">🍳</span>
-              <div class="journey-body">
-                <p class="journey-title">早餐<span class="en">Breakfast</span></p>
-              </div>
-            </div>
-          </li>
-          <li class="journey-gap"><span class="journey-gap-badge">🕐 30m</span></li>
-          <li class="journey-stop">
-            <span class="journey-dot"></span>
-            <div class="journey-card">
               <span class="journey-time">10:30</span>
               <span class="journey-icon">🏮</span>
               <div class="journey-body">
@@ -1399,6 +1388,19 @@
         </div>
 
         <ol class="journey-timeline">
+
+          <li class="journey-stop">
+            <span class="journey-dot"></span>
+            <div class="journey-card">
+              <span class="journey-time">07:30</span>
+              <span class="journey-icon">🚕</span>
+              <div class="journey-body">
+                <p class="journey-title">的士出發，前往難波集合點<span class="en">Taxi to Namba meeting point</span></p>
+              </div>
+            </div>
+          </li>
+
+          <li class="journey-gap"><span class="journey-gap-badge">🕐 30m</span></li>
 
           <li class="journey-stop">
             <span class="journey-dot"></span>
@@ -1760,7 +1762,7 @@
     <section class="day-panel" id="panel-rail" role="tabpanel" aria-labelledby="tab-rail" data-day="rail">
       <div class="panel-inner panel-inner-wide">
         <h2 class="panel-title">關西鐵路路網示意圖<span class="en">Kansai Rail Network Map</span></h2>
-        <p class="panel-intro">盡量涵蓋大阪、京都、神戶、奈良、和歌山、關西機場之間嘅主要鐵路走線（簡化示意，非依實際比例、非官方地圖）。大阪市中心地鐵詳圖放喺虛線框內，特別標示「心齋橋」與「長堀橋」兩個轉乘站。畫面可以用右上角按鈕、滑鼠滾輪或手指縮放，亦都可以拖曳平移。</p>
+        <p class="panel-intro">盡量涵蓋大阪、京都、神戶、奈良、和歌山、關西機場之間嘅主要鐵路走線（簡化示意，非依實際比例、非官方地圖）。大阪市中心地鐵詳圖放喺虛線框內，特別標示「心齋橋」與「長堀橋」兩個轉乘站——呢兩個站都喺你住嘅 OCEAN 心齋橋東步行範圍內（長堀橋站最近，約 3 分鐘；心齋橋站約 8-9 分鐘，可轉乘御堂筋線去梅田、難波等地）。畫面可以用右上角按鈕、滑鼠滾輪或手指縮放，亦都可以拖曳平移。</p>
 
         <div class="info-card">
           <div class="map-photo-wrap" id="osakaMapPhotoTrigger">
@@ -2265,7 +2267,7 @@
     if (!trigger || !lightbox) return;
 
     function open(){
-      if (lightboxImg && thumbImg && !lightboxImg.src) lightboxImg.src = thumbImg.src;
+      if (lightboxImg && thumbImg) lightboxImg.src = thumbImg.src;
       lightbox.hidden = false;
     }
     function close(){ lightbox.hidden = true; }
