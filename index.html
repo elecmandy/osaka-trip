@@ -38,8 +38,8 @@
 
   /* ---------- Sidebar ---------- */
   .sidebar{
-    flex:0 0 260px;
-    width:260px;
+    flex:0 0 300px;
+    width:300px;
     background:linear-gradient(180deg, var(--ocean-deep), var(--ocean));
     color:#ffffff;
     padding:2.4rem 1.6rem;
@@ -953,7 +953,8 @@
     }
     .nav-list::before{ display:none; }
     .nav-btn::before{ display:none; }
-    .nav-btn{ flex:0 0 auto; white-space:nowrap; }
+    .nav-btn{ flex:0 0 92px; white-space:normal; text-align:center; }
+    .nav-btn .nav-date{ display:block; }
     .nav-extra{
       margin-top:0;
       padding-top:0;
@@ -1813,6 +1814,30 @@
             <a class="map-preview-open" href="https://maps.app.goo.gl/DyuGg4cSTGfsdxfs8" target="_blank" rel="noopener noreferrer">Google 地圖 ↗</a>
           </div>
         </div>
+
+        <h3 class="info-heading">⚠️ 注意事項<span class="en">Important Notes</span></h3>
+
+        <div class="info-card" style="background:#fff8ec;border-color:#f0d3b4;">
+          <p class="info-card-label" style="color:#a15426;">關於清掃，以及盥洗用品<span class="en">Cleaning &amp; Toiletries</span></p>
+          <ul style="margin:0;padding-left:1.2rem;display:flex;flex-direction:column;gap:0.7rem;">
+            <li style="font-size:0.95rem;color:var(--navy);">民宿（公寓）不同於飯店，沒有每天更換毛巾以及清潔服務。<span class="en">This is a guesthouse/apartment, not a hotel — there is no daily towel change or housekeeping service.</span></li>
+            <li style="font-size:0.95rem;color:var(--navy);">入住3天以上(含3天)，毛巾每3天免費更換一次，需提前一天和我們預約。<span class="en">For stays of 3 nights or more, towels can be changed free of charge every 3 days — please book with us one day in advance.</span></li>
+            <li style="font-size:0.95rem;color:var(--navy);">牙膏考慮衛生問題沒有提供，需要自備。<span class="en">Toothpaste is not provided for hygiene reasons — please bring your own.</span></li>
+            <li style="font-size:0.95rem;color:var(--navy);">房間有準備盥洗用品（洗髮精、護髮素、沐浴露、牙刷、毛巾浴巾、拖鞋）。<span class="en">Toiletries are provided in the room (shampoo, conditioner, body wash, toothbrush, towels, slippers).</span></li>
+            <li style="font-size:0.95rem;color:var(--navy);">洗髮精、護髮素、沐浴露、衛生紙、抽紙用完是可以補充的。<span class="en">Shampoo, conditioner, body wash, toilet paper and tissues can be refilled if they run out.</span></li>
+          </ul>
+        </div>
+
+        <div class="info-card" style="background:#fff8ec;border-color:#f0d3b4;margin-top:1rem;">
+          <p class="info-card-label" style="color:#a15426;">入住注意事項<span class="en">Stay Guidelines</span></p>
+          <ul style="margin:0;padding-left:1.2rem;display:flex;flex-direction:column;gap:0.7rem;">
+            <li style="font-size:0.95rem;color:var(--navy);">若在入住期間發現房間內設施損壞或遺失，維修費用由您承擔，敬請見諒。<span class="en">Any damage to or loss of room facilities during your stay will be charged to you — thank you for your understanding.</span></li>
+            <li style="font-size:0.95rem;color:var(--navy);">如果您在退房時間還未離開，將附加收取清掃員等待所發生的費用。<span class="en">A waiting fee for the cleaning staff will apply if you have not left by check-out time.</span></li>
+            <li style="font-size:0.95rem;color:var(--navy);">如果房間過度髒亂，將附加收取額外的清潔費。<span class="en">An extra cleaning fee will apply if the room is left excessively dirty.</span></li>
+            <li style="font-size:0.95rem;color:var(--navy);">丟棄行李箱等粗大垃圾需要另外支付費用。<span class="en">Disposing of large items such as suitcases incurs an additional fee.</span></li>
+            <li style="font-size:0.95rem;color:var(--navy);">全館禁止吸煙，如發現吸煙跡象，我們將收取3萬日元作為專業除味施工費。<span class="en">Smoking is prohibited throughout the property — evidence of smoking will incur a ¥30,000 professional deodorizing fee.</span></li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -2076,10 +2101,8 @@
             </span>
         </div>
 
-        <h3 class="info-heading" style="font-size:1.05rem;">HEP FIVE</h3>
-
         <div class="info-card">
-          <p class="info-card-label">Magical Chiikawa<span class="en">まじかるちいかわストア・B1</span></p>
+          <p class="info-card-label">HEP FIVE - Magical Chiikawa<span class="en">まじかるちいかわストア・B1</span></p>
           <span class="map-entry">
               <button type="button" class="map-link" data-map-name="Magical Chiikawa HEP FIVE" data-map-lat="34.7038" data-map-lng="135.5013" data-map-gurl="https://maps.app.goo.gl/czp3QivKsZYXdiSw9?g_st=ic">📍 地圖</button>
               <div class="map-preview" hidden>
